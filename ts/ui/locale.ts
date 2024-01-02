@@ -3,6 +3,7 @@ import { settings } from "../modules/settings";
 import { LocaleKeys } from "../type";
 import { error } from "../utils/error";
 import path from "path";
+import { ipcMain } from "electron";
 
 let locales: any[] = [];
 export async function updateLocale() {
@@ -29,4 +30,12 @@ export function locale(keys: LocaleKeys): string {
     if (typeof result === 'string') return result;
   }
   return keys;
+}
+
+export async function initLocale() {
+  await updateLocale();
+  ipcMain.handle('locale:get', (_, keys: LocaleKeys)=>{
+    if (typeof keys !== 'string') return String(keys);
+    return locale(keys);
+  });
 }
