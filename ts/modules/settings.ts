@@ -1,3 +1,4 @@
+import { BrowserWindow } from "electron";
 import { getSettingsTemplate } from "../templates";
 import { SettingsTemplate } from "../type";
 import { error } from "../utils/error";
@@ -11,7 +12,9 @@ class Settings {
   async save() {
     let err = await writeConfig('settings', this.#data);
     if (!err) return;
-    // TODO: Fire Settings Save Failed Event
+    for (const window of BrowserWindow.getAllWindows()) {
+      window.webContents.send('settings:error', err);
+    }
   };
   get locale(): string[] {
     return [...this.#data.locale];
