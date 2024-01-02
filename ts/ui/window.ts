@@ -14,6 +14,12 @@ class WindowState {
   constructor(window: BrowserWindow, id: string) {
     this.#window = window;
     this.#id = id;
+
+    this.#window.on('resized', ()=>this.save());
+    this.#window.on('moved', ()=>this.save());
+    this.#window.on('maximize', ()=>this.save());
+    this.#window.on('unmaximize', ()=>this.save());
+    this.#window.on('restore', ()=>this.save());
   };
   async save() {
     if (this.#window.isMaximized()) {
@@ -37,7 +43,26 @@ function setWindowIcon(window: BrowserWindow) {
   // TODO: set window icon
 }
 function setWindowEvent(window: BrowserWindow) {
-  // TODO: set window event
+  window.on('blur', ()=>window.webContents.send('win:active', false));
+  window.on('focus', ()=>window.webContents.send('win:active', true));
+  window.on('maximize', ()=>window.webContents.send('win:resize', true));
+  window.on('restore', ()=>window.webContents.send('win:resize', false));
+  window.on('unmaximize', ()=>window.webContents.send('win:resize', false));
+  window.on('resized', ()=>window.webContents.send('win:resize', window.isMaximized()));
+  window.webContents.on('ipc-message', (_, channel)=>{
+    if (!channel.startsWith('win:')) return;
+    switch (channel.slice(4)) {
+      case 'minimize':
+        return window.minimize();
+      case 'resize':
+        if (window.isMaximized()) return window.restore();
+        return window.maximize();
+      case 'close':
+        return window.close();
+      case 'hide':
+        return window.hide();
+    }
+  });
 }
 
 export function initWindow(options: WindowInitOptions): BrowserWindow {
@@ -51,7 +76,7 @@ export function initWindow(options: WindowInitOptions): BrowserWindow {
 
   let state = new WindowState(window, options.stateId);
   if (options.autoShow) window.on('ready-to-show', ()=>state.show());
-  
+
   return window;
 }
 
