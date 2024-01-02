@@ -3,7 +3,7 @@ const { readdir, writeFile, readFile } = require('fs/promises');
 const path = require('path');
 const { parse } = require('yaml');
 
-const DEFAULT_LOCAL = require('../package.json').defaultLocal
+const DEFAULT_LOCAL = require('../package.json').defaultLocale
 
 function walkKeys(object, keys, name) {
   for (const key in object) {
