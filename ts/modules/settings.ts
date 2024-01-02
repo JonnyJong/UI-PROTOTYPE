@@ -34,6 +34,14 @@ class Settings {
     this.save();
     nativeTheme.themeSource = this.#data.theme;
   };
+  get color(): string {
+    return this.#data.color;
+  };
+  set color(value: string) {
+    error(/^#[0-9A-Fa-f]{6}$/.test(value), 'color', 'type string and hex color schema', value);
+    this.#data.color = value;
+    this.save();
+  };
   // Add other settings here
 };
 
