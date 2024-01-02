@@ -2,10 +2,26 @@ import { BrowserWindow } from "electron";
 import { locale } from "./locale";
 import { settings } from "../modules/settings";
 import path from "path";
-import { WindowInitOptions, WindowStateTemplate } from "../type";
+import { WindowInitOptions, WindowIpcEventHandler, WindowStateTemplate } from "../type";
 import { error } from "../utils/error";
 import { getWindowStateTemplate } from "../templates";
 import { readConfig, writeConfig } from "../utils/fs";
+
+let ipcEventHandlers: { [scope: string]: WindowIpcEventHandler } = {
+  win: (window, event)=>{
+    switch (event) {
+      case 'minimize':
+        return window.minimize();
+      case 'resize':
+        if (window.isMaximized()) return window.restore();
+        return window.maximize();
+      case 'close':
+        return window.close();
+      case 'hide':
+        return window.hide();
+    }
+  },
+};
 
 class WindowState {
   #window: BrowserWindow;
@@ -42,6 +58,12 @@ class WindowState {
 function setWindowIcon(window: BrowserWindow) {
   // TODO: set window icon
 }
+
+function windowIpcHandler(window: BrowserWindow, channel: string, ...args: any[]) {
+  let scope = channel.split(':')[0];
+  if (!(scope in ipcEventHandlers)) return;
+  ipcEventHandlers[scope](window, channel.slice(scope.length + 1), ...args);
+}
 function setWindowEvent(window: BrowserWindow) {
   window.on('blur', ()=>window.webContents.send('win:active', false));
   window.on('focus', ()=>window.webContents.send('win:active', true));
@@ -49,20 +71,7 @@ function setWindowEvent(window: BrowserWindow) {
   window.on('restore', ()=>window.webContents.send('win:resize', false));
   window.on('unmaximize', ()=>window.webContents.send('win:resize', false));
   window.on('resized', ()=>window.webContents.send('win:resize', window.isMaximized()));
-  window.webContents.on('ipc-message', (_, channel)=>{
-    if (!channel.startsWith('win:')) return;
-    switch (channel.slice(4)) {
-      case 'minimize':
-        return window.minimize();
-      case 'resize':
-        if (window.isMaximized()) return window.restore();
-        return window.maximize();
-      case 'close':
-        return window.close();
-      case 'hide':
-        return window.hide();
-    }
-  });
+  window.webContents.on('ipc-message', (_, channel, ...args)=>windowIpcHandler(window, channel, ...args));
 }
 
 export function initWindow(options: WindowInitOptions): BrowserWindow {

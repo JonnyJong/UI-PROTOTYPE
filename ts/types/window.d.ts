@@ -1,4 +1,4 @@
-import { BrowserWindowConstructorOptions } from "electron";
+import { BrowserWindow, BrowserWindowConstructorOptions } from "electron";
 
 export type WindowInitOptions = {
   construct?: BrowserWindowConstructorOptions,
@@ -14,3 +14,5 @@ export type WindowStateTemplate = [
   x: number,
   y: number,
 ];
+
+export type WindowIpcEventHandler = (window: BrowserWindow, event: string, ...args: any[])=>any;
