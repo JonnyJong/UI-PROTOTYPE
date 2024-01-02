@@ -3,6 +3,8 @@ const { readdir, writeFile, readFile } = require('fs/promises');
 const path = require('path');
 const { parse } = require('yaml');
 
+const DEFAULT_LOCAL = require('../package.json').defaultLocal
+
 function walkKeys(object, keys, name) {
   for (const key in object) {
     if (typeof object[key] === 'string') {
@@ -53,7 +55,7 @@ async function renderFile(file) {
     const yaml = await readFile(file, 'utf-8');
     const json = parse(yaml);
 
-    if (name === 'zh-CN') {
+    if (name === DEFAULT_LOCAL) {
       await generateDeclare(json);
     }
 
