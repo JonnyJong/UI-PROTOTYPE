@@ -1,4 +1,4 @@
-import { BrowserWindow } from "electron";
+import { BrowserWindow, nativeTheme } from "electron";
 import { locale } from "./locale";
 import { settings } from "../modules/settings";
 import path from "path";
@@ -6,6 +6,9 @@ import { WindowInitOptions, WindowIpcEventHandler, WindowStateTemplate } from ".
 import { error } from "../utils/error";
 import { getWindowStateTemplate } from "../templates";
 import { readConfig, writeConfig } from "../utils/fs";
+
+const BG_LIGHT = '#fff';
+const BG_DARK = '#000';
 
 let ipcEventHandlers: { [scope: string]: WindowIpcEventHandler } = {
   win: (window, event)=>{
@@ -89,6 +92,17 @@ export function initWindow(options: WindowInitOptions): BrowserWindow {
   return window;
 }
 
+function getWindowBgColor(): string {
+  switch (settings.theme) {
+    case 'light':
+      return BG_LIGHT;
+    case 'dark':
+      return BG_DARK;
+    default:
+      return nativeTheme.shouldUseDarkColors ? BG_DARK : BG_DARK;
+  }
+}
+
 export function initMainWindow(): BrowserWindow {
   let mainWindow = initWindow({
     construct: {
@@ -97,7 +111,7 @@ export function initMainWindow(): BrowserWindow {
       resizable: true,
       enableLargerThanScreen: false,
       title: locale('app.name'),
-      backgroundColor: settings.theme,
+      backgroundColor: getWindowBgColor(),
       // Modify the following properties
       // minHeight: 0,
       // minWidth: 0,
