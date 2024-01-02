@@ -1,4 +1,4 @@
-import { getSettingsTemplate } from "../template/settings";
+import { getSettingsTemplate } from "../templates";
 import { SettingsTemplate } from "../type";
 import { error } from "../utils/error";
 import { readConfig, writeConfig } from "../utils/fs";

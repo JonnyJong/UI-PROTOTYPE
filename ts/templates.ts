@@ -1,4 +1,5 @@
-import { SettingsTemplate } from "../type";
+import { screen } from "electron";
+import { SettingsTemplate, WindowStateTemplate } from "./type";
 
 export function getSettingsTemplate(): SettingsTemplate {
   return {
