@@ -1,4 +1,4 @@
-[简体中文](../doc/README_CN.md)
+[简体中文](./doc/README_CN.md)
 
 # UI-PROTOTYPE
 A clean, fully keyboard-enabled, feature-rich UI prototype designed specifically for Electron.
