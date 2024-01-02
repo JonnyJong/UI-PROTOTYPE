@@ -4,11 +4,8 @@ import { settings } from "../modules/settings";
 import path from "path";
 import { WindowInitOptions, WindowIpcEventHandler, WindowStateTemplate } from "../type";
 import { error } from "../utils/error";
-import { getWindowStateTemplate } from "../templates";
+import { BG_DARK, BG_LIGHT, getWindowStateTemplate } from "../templates";
 import { readConfig, writeConfig } from "../utils/fs";
-
-const BG_LIGHT = '#fff';
-const BG_DARK = '#000';
 
 let ipcEventHandlers: { [scope: string]: WindowIpcEventHandler } = {
   win: (window, event)=>{

@@ -2,6 +2,8 @@ import { screen, systemPreferences } from "electron";
 import { SettingsTemplate, WindowStateTemplate } from "./type";
 
 export const DEFAULT_COLOR = '#3E6FC4';
+export const BG_LIGHT = '#fff';
+export const BG_DARK = '#000';
 
 export function getSettingsTemplate(): SettingsTemplate {
   let color = systemPreferences.getAccentColor();
