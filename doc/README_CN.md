@@ -1,7 +1,7 @@
-[../doc/README_CN.md](简体中文)
+[../README.md](English)
 
 # UI-PROTOTYPE
-A clean, fully keyboard-enabled, feature-rich UI prototype designed specifically for Electron.
+一个简洁的、完整键盘支持、功能丰富的专为 Electron 设计的 UI 原型 。
 
 # 项目结构
 - assets 资源文件 KEEP

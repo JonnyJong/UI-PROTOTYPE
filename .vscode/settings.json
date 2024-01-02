@@ -1,0 +1,22 @@
+{
+  "emeraldwalk.runonsave": {
+    "commands": [
+      {
+        "match": "\\.styl$",
+        "cmd": "node build/style"
+      },
+      {
+        "match": "\\.yml$",
+        "cmd": "node build/locale ${file}"
+      },
+      {
+        "match": "\\.yaml$",
+        "cmd": "node build/locale ${file}"
+      },
+      {
+        "match": "\\.pug$",
+        "cmd": "node build/layout"
+      }
+    ]
+  }
+}

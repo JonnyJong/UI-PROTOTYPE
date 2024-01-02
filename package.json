@@ -1,0 +1,38 @@
+{
+  "name": "ui-prototype",
+  "version": "0.0.0",
+  "description": "A clean, fully keyboard-enabled, feature-rich UI prototype designed specifically for Electron.",
+  "main": "dist/scripts/main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "node build/build",
+    "pack": "node build/pack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JonnyJong/UI-PROTOTYPE.git"
+  },
+  "keywords": [
+    "electron",
+    "ui"
+  ],
+  "author": "jonnyjong",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JonnyJong/UI-PROTOTYPE/issues"
+  },
+  "homepage": "https://github.com/JonnyJong/UI-PROTOTYPE#readme",
+  "devDependencies": {
+    "@types/electron": "^1.6.10",
+    "@types/node": "^20.10.6",
+    "@types/pug": "^2.0.10",
+    "@types/stylus": "^0.48.42",
+    "@types/yaml": "^1.9.7",
+    "electron": "^28.1.0",
+    "stylus": "^0.62.0",
+    "yaml": "^2.3.4"
+  },
+  "dependencies": {
+    "pug": "^3.0.2"
+  }
+}
