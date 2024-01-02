@@ -1,4 +1,4 @@
-import { BrowserWindow } from "electron";
+import { BrowserWindow, nativeTheme } from "electron";
 import { getSettingsTemplate } from "../templates";
 import { SettingsTemplate } from "../type";
 import { error } from "../utils/error";
@@ -8,6 +8,7 @@ class Settings {
   #data!: SettingsTemplate;
   async init() {
     this.#data = await readConfig<SettingsTemplate>('settings', getSettingsTemplate());
+    nativeTheme.themeSource = this.#data.theme;
   };
   async save() {
     let err = await writeConfig('settings', this.#data);
@@ -31,6 +32,7 @@ class Settings {
     error(['system', 'light', 'dark'].includes(value), 'theme', '"system", "light" or "dark"', value);
     this.#data.theme = value;
     this.save();
+    nativeTheme.themeSource = this.#data.theme;
   };
   // Add other settings here
 };
