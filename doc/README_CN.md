@@ -1,4 +1,4 @@
-[../README.md](English)
+[English](../README.md)
 
 # UI-PROTOTYPE
 一个简洁的、完整键盘支持、功能丰富的专为 Electron 设计的 UI 原型 。
