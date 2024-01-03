@@ -6,6 +6,7 @@ import { WindowInitOptions, WindowIpcEventHandler, WindowStateTemplate } from ".
 import { error } from "../utils/error";
 import { BG_DARK, BG_LIGHT, getWindowStateTemplate } from "../templates";
 import { readConfig, writeConfig } from "../utils/fs";
+import { assets } from "../utils/path";
 
 let ipcEventHandlers: { [scope: string]: WindowIpcEventHandler } = {
   win: (window, event)=>{
@@ -56,7 +57,14 @@ class WindowState {
 };
 
 function setWindowIcon(window: BrowserWindow) {
-  // TODO: set window icon
+  switch (process.platform) {
+    case 'win32':
+      window.setIcon(assets('icon/icon.ico'));
+      break;
+    case 'linux':
+      window.setIcon(assets('icon/512.png'));
+      break;
+  }
 }
 
 function windowIpcHandler(window: BrowserWindow, channel: string, ...args: any[]) {
