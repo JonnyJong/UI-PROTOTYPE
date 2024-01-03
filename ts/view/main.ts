@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
 // Dev
 ipcRenderer.invoke('dev:check').then((isDev)=>{
+  if (!isDev) return;
   window.addEventListener('keypress', ({ctrlKey, code})=>{
     if (ctrlKey && code === 'KeyR') location.reload();
   });
