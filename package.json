@@ -2,7 +2,7 @@
   "name": "ui-prototype",
   "version": "0.0.0",
   "description": "A clean, fully keyboard-enabled, feature-rich UI prototype designed specifically for Electron.",
-  "main": "dist/scripts/main.js",
+  "main": "dist/script/main.js",
   "scripts": {
     "start": "electron .",
     "build": "node build/build",

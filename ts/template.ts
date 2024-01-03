@@ -6,8 +6,10 @@ export const BG_LIGHT = '#fff';
 export const BG_DARK = '#000';
 
 export function getSettingsTemplate(): SettingsTemplate {
-  let color = systemPreferences.getAccentColor();
-  if (color.length === 0) color = DEFAULT_COLOR;
+  let color = DEFAULT_COLOR;
+  if ('getAccentColor' in systemPreferences) {
+    color = systemPreferences.getAccentColor();
+  }
   return {
     theme: 'system',
     locale: [require('../../package.json').defaultLocal],
