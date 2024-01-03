@@ -4,11 +4,13 @@ import { initMainWindow } from "./ui/window";
 import { settings } from "./modules/settings";
 import { updateLocale } from "./ui/locale";
 import { initDevFunction } from "./dev";
+import { initEvents } from "./modules/event";
 
 initLock();
 
 app.on('ready', async ()=>{
   Menu.setApplicationMenu(null);
+  initEvents();
   await settings.init();
   await updateLocale();
   const mainWindow = initMainWindow();
