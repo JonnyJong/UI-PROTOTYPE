@@ -4,7 +4,7 @@ import { settings } from "../modules/settings";
 import path from "path";
 import { WindowInitOptions, WindowIpcEventHandler, WindowStateTemplate } from "../type";
 import { error } from "../utils/error";
-import { BG_DARK, BG_LIGHT, getWindowStateTemplate } from "../templates";
+import { BG_DARK, BG_LIGHT, getWindowStateTemplate } from "../template";
 import { readConfig, writeConfig } from "../utils/fs";
 import { assets } from "../utils/path";
 
