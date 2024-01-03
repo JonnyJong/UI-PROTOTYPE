@@ -1,4 +1,4 @@
-import { BrowserWindow, nativeTheme } from "electron";
+import { BrowserWindow, app, nativeTheme } from "electron";
 import { locale } from "./locale";
 import { settings } from "../modules/settings";
 import path from "path";
@@ -133,5 +133,11 @@ export function initMainWindow(): BrowserWindow {
     stateId: 'main',
   });
   // TODO: Main window event
+
+  // Dev
+  if (!app.isPackaged) {
+    mainWindow.webContents.openDevTools();
+  }
+
   return mainWindow;
 }
