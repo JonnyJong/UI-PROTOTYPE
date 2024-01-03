@@ -1,7 +1,9 @@
 import { ipcRenderer } from "electron";
 import { initComponents } from "./ui";
+import { initTheme } from "./modules/theme";
 
 document.addEventListener('DOMContentLoaded', ()=>{
+  initTheme();
   initComponents();
 });
 
