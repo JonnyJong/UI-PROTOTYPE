@@ -7,5 +7,5 @@ export function initDevFunction(mainWindow: BrowserWindow) {
   // Locale
   watchFile(path.join(__dirname, '../locales.json'), ()=>updateLocale());
   // Style
-  watchFile(path.join(__dirname, '../style.css'), ()=>mainWindow.webContents.reload());
+  watchFile(path.join(__dirname, '../style.css'), ()=>mainWindow.webContents.send('dev:update_style'));
 }
