@@ -12,7 +12,7 @@ export function getSettingsTemplate(): SettingsTemplate {
   }
   return {
     theme: 'system',
-    locale: [require('../../package.json').defaultLocal],
+    locale: [require('../../package.json').defaultLocale],
     color: color.slice(0, 7),
   };
 }
