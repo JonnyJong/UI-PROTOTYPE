@@ -1,6 +1,8 @@
 import { ipcRenderer } from "electron";
+import { initComponents } from "./ui";
 
 document.addEventListener('DOMContentLoaded', ()=>{
+  initComponents();
 });
 
 // Dev
@@ -9,11 +11,13 @@ ipcRenderer.invoke('dev:check').then((isDev)=>{
   window.addEventListener('keypress', ({ctrlKey, code})=>{
     if (ctrlKey && code === 'KeyR') location.reload();
   });
-  let prev = document.querySelector('[main-css]');
-  let current = document.createElement('link');
-  current.rel = 'stylesheet';
-  current.href = './style.css?' + Date.now();
-  current.setAttribute('main-css', '');
-  document.head.append(current);
-  prev?.remove();
+  ipcRenderer.on('dev:update_style', ()=>{
+    let prev = document.querySelector('[main-css]');
+    let current = document.createElement('link');
+    current.rel = 'stylesheet';
+    current.href = './style.css?' + Date.now();
+    current.setAttribute('main-css', '');
+    document.head.append(current);
+    prev?.remove();
+  });
 });
