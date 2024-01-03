@@ -1,6 +1,6 @@
 import { ipcRenderer } from "electron";
-import { UILang as ILang, UILangData } from "../../type";
-import { error } from "../../utils/error";
+import { UILang as ILang, UILangData } from "../../../type";
+import { error } from "../../../utils/error";
 class UILang extends HTMLElement implements ILang {
   #inited = false;
   #key: string = '';
