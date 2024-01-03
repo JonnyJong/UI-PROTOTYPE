@@ -2,7 +2,7 @@ import { Menu, app } from "electron";
 import { initLock } from "./modules/process-lock";
 import { initMainWindow } from "./ui/window";
 import { settings } from "./modules/settings";
-import { updateLocale } from "./ui/locale";
+import { initLocale } from "./ui/locale";
 import { initDevFunction } from "./dev";
 import { initEvents } from "./modules/event";
 
@@ -12,7 +12,7 @@ app.on('ready', async ()=>{
   Menu.setApplicationMenu(null);
   initEvents();
   await settings.init();
-  await updateLocale();
+  await initLocale();
   const mainWindow = initMainWindow();
 
   if (!app.isPackaged) initDevFunction(mainWindow);
