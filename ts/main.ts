@@ -5,7 +5,6 @@ import { settings } from "./modules/settings";
 import { updateLocale } from "./ui/locale";
 import { initDevFunction } from "./dev";
 import { initEvents } from "./modules/event";
-import { platform } from "os";
 
 initLock();
 
