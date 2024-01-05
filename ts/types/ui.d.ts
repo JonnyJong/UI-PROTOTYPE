@@ -1,3 +1,5 @@
+export type Attributes = { [name: string]: string }; 
+
 export type UILangData = { [key: string]: string };
 export class UILang extends HTMLElement {
   key: string;
