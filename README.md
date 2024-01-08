@@ -1,6 +1,4 @@
-<div style="text-align:center">
-<img src="./resources/linux/ui-prototype.svg">
-</div>
+![UI-PROTOTYPE](./resources/linux/ui-prototype.svg)
 
 # UI-PROTOTYPE
 A clean, fully keyboard-enabled, feature-rich UI prototype designed specifically for Electron.
