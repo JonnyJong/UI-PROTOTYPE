@@ -5,8 +5,6 @@
   "main": "dist/script/main.js",
   "scripts": {
     "start": "electron .",
-    "build": "node build/build",
-    "pack": "node build/pack",
     "compile-ts": "tsc && tsc-alias",
     "compile-style": "node tools/compiler/style",
     "compile-locale": "node tools/compiler/locale",
