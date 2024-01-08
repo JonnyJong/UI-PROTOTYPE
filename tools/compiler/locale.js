@@ -19,7 +19,7 @@ async function generateDTS(locale) {
   try {
     let keys = [];
     walkKeys(locale, keys, []);
-    let dts = `export type LocaleDict = { [key: string]: string | LocaleDict };\nexport type LocaleKeys = '${keys.join("'|'")}';`;
+    let dts = `export type LocaleDict = { [key: string]: string | LocaleDict };\nexport type LocaleKeys = '${keys.join("'|'")}';\n`;
     await writeFile('./src/shared/types/locales.d.ts', dts, 'utf8');
   } catch (error) {
     console.error(error);
