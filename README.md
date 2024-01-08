@@ -1,5 +1,5 @@
 <div style="text-align:center">
-  ![UI-PROTOTYPE](./resources/linux/ui-prototype.svg)
+<img src="./resources/linux/ui-prototype.svg">
 </div>
 
 # UI-PROTOTYPE
