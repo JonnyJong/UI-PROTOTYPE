@@ -6,7 +6,14 @@
   "scripts": {
     "start": "electron .",
     "build": "node build/build",
-    "pack": "node build/pack"
+    "pack": "node build/pack",
+    "compile-ts": "tsc && tsc-alias",
+    "compile-style": "node tools/compiler/style",
+    "compile-locale": "node tools/compiler/locale",
+    "compile-assets": "node tools/compiler/assets",
+    "compile-pug": "node tools/compiler/view",
+    "compile": "tsc && tsc-alias && node tools/compiler/all",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -24,12 +31,18 @@
   "homepage": "https://github.com/JonnyJong/UI-PROTOTYPE#readme",
   "devDependencies": {
     "@types/electron": "^1.6.10",
+    "@types/jest": "^29.5.11",
     "@types/node": "^20.10.6",
     "@types/pug": "^2.0.10",
     "@types/stylus": "^0.48.42",
     "@types/yaml": "^1.9.7",
     "electron": "^28.1.0",
+    "io-ts": "^2.2.21",
+    "jest": "^29.7.0",
     "stylus": "^0.62.0",
+    "ts-jest": "^29.1.1",
+    "tsc-alias": "^1.8.8",
+    "typescript": "^5.3.3",
     "yaml": "^2.3.4"
   },
   "dependencies": {

@@ -1,26 +1,23 @@
 {
   "compilerOptions": {
-    "allowJs": false,
-    "module": "CommonJS",
     "target": "ES2022",
-    "moduleResolution": "Node",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "outDir": "dist",
+    "baseUrl": "src",
+    "sourceRoot": "src",
+    "strict": true,
+    "sourceMap": true,
+    "allowJs": false,
+    "resolveJsonModule": true,
     "esModuleInterop": true,
-    "downlevelIteration": true,
+    "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "strict": true,
-    "rootDir": "./ts",
-    "outDir": "./dist/script",
-    "sourceMap": true,
-    "pretty": false,
+    "forceConsistentCasingInFileNames": true,
     "removeComments": true,
+    "incremental": true,
   },
-  "compileOnSave": true,
-  "include": [
-    "./ts/**/*"
-  ],
-  "exclude": [
-    "./build",
-    "./dist"
-  ]
+  "include": ["src/**/*"],
+  "exclude": ["dist", "node_modules"]
 }

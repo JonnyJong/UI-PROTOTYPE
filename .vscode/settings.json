@@ -2,20 +2,24 @@
   "emeraldwalk.runonsave": {
     "commands": [
       {
+        "match": "\\.ts$",
+        "cmd": "npm run compile-ts"
+      },
+      {
         "match": "\\.styl$",
-        "cmd": "node build/style"
+        "cmd": "npm run compile-style"
       },
       {
         "match": "\\.yml$",
-        "cmd": "node build/locale ${file}"
+        "cmd": "npm run compile-locale"
       },
       {
         "match": "\\.yaml$",
-        "cmd": "node build/locale ${file}"
+        "cmd": "npm run compile-locale"
       },
       {
         "match": "\\.pug$",
-        "cmd": "node build/layout"
+        "cmd": "npm run compile-pug"
       }
     ]
   }

@@ -1,1 +1,0 @@
-export type LocaleKeys = 'language' | 'app.name';
