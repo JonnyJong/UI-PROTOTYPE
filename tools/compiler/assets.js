@@ -22,6 +22,6 @@ if (require.main === module) {
   if (src) {
     copyAssets(src);
   } else {
-    eachInDir('./src/renderer', copyAssets);
+    eachInDir('./src', copyAssets);
   }
 }
