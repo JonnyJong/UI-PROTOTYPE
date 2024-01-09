@@ -1,6 +1,6 @@
 import { Deserializers, SerializedData, Serializers, SettingsErrorCode, SettingsKeyMap, Validators } from "shared/types/settings";
-import { color } from "shared/config/default.json";
-import { app } from "electron";
+import { color as DEFAULT_COLOR } from "shared/config/default.json";
+import { app, systemPreferences } from "electron";
 import t from "io-ts";
 import { isLeft } from "fp-ts/Either";
 import rfdc from "rfdc";
@@ -9,10 +9,14 @@ import { getDataPath } from "main/utils/path";
 import { readFile } from "fs/promises";
 
 function getDefaultSettings(): SettingsKeyMap {
+  let color = DEFAULT_COLOR;
+  if ('getAccentColor' in systemPreferences) {
+    color = systemPreferences.getAccentColor();
+  }
   return {
     languages: app.getPreferredSystemLanguages(),
     theme: 'system',
-    color,
+    color: color.slice(0, 7),
   };
 }
 
