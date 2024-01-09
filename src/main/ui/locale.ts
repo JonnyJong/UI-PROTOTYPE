@@ -2,6 +2,7 @@ import { readFile } from "fs/promises";
 import { LocaleDict, LocaleKeys } from "shared/types/locales";
 import { distPath } from "shared/utils/path";
 import { alias, fallbackLocales } from "shared/config/locale.json";
+import rfdc from "rfdc";
 
 let localeDict: LocaleDict = {};
 
@@ -30,7 +31,7 @@ export function locale(keys: LocaleKeys): string {
  * @returns {LocaleDict} - The complete localization dictionary.
  */
 export function getLocaleDict(): LocaleDict {
-  return localeDict;
+  return rfdc()(localeDict);
 }
 
 /*
