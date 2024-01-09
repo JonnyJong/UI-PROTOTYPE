@@ -1,4 +1,8 @@
 {
   "locale": "zh-CN",
-  "color": "#3e6fc4"
+  "color": "#3e6fc4",
+  "windowBackground": {
+    "light": "#fff",
+    "dark": "#000"
+  }
 }
