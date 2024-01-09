@@ -2,8 +2,7 @@
 **项目状态:** 该项目目前还处于开发阶段，某些功能尚未完成。
 
 <h1 align="center">
-  <br>
-  <img src="./resources/linux/ui-prototype.svg" alt="UI-PROTOTYPE" height="128">
+  <a src="https://ui-prototype.jonnys.top"><img src="./resources/linux/ui-prototype.svg" alt="UI-PROTOTYPE" height="128"></a>
   <br>
   UI-PROTOTYPE
   <br>
