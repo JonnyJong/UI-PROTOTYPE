@@ -10,7 +10,7 @@
     "compile-locale": "node tools/compiler/locale",
     "compile-assets": "node tools/compiler/assets",
     "compile-pug": "node tools/compiler/view",
-    "compile": "tsc && tsc-alias && node tools/compiler/all",
+    "compile": "node tools/compiler/all && tsc && tsc-alias",
     "test": "jest"
   },
   "repository": {
