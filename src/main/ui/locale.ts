@@ -1,6 +1,7 @@
 import { readFile } from "fs/promises";
 import { LocaleDict, LocaleKeys } from "shared/types/locales";
 import { distPath } from "shared/utils/path";
+import { fallbackLocales } from "shared/config/default.json";
 
 let localeDict: LocaleDict = {};
 
@@ -81,10 +82,23 @@ async function readLocaleFile(name: string): Promise<LocaleDict | null> {
  */
 export async function loadLocales(localesList: string[]): Promise<void> {
   let newLocaleDict: LocaleDict = {};
+
+  // Copy
+  localesList = [...localesList];
+
+  // Fallback
+  for (const name of fallbackLocales) {
+    if (localesList.includes(name)) continue;
+    localesList.push(name);
+  }
+
+  // Load from lowest priority
+  localesList.reverse();
   for (const name of localesList) {
     const dict = await readLocaleFile(name);
     if (dict === null) continue;
     newLocaleDict = mergeLocale(newLocaleDict, dict);
   }
+  
   localeDict = newLocaleDict;
 }

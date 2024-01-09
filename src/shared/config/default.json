@@ -1,3 +1,4 @@
 {
-  "locale": "zh-CN"
+  "locale": "zh-CN",
+  "fallbackLocales": ["en", "zh-CN"]
 }
