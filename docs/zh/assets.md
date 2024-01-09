@@ -18,7 +18,7 @@ UI-PROTOTYPE 将应用图标存放于以下几个目录
 - `resources`
 - `src/shared/assets`
 
-`resources`目录下的图标用于最终打包。
+`resources`目录下的图标用于最终打包。  
 `src/shared/assets`中`icon.svg`作为应用内图标；`icon.ico`为 Windows 系统下的窗口图标；`icon.png`为非 Windows 系统下的窗口图标。
 
 ## 引用资源文件

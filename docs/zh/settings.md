@@ -14,7 +14,7 @@ UI-PROTOTYPE 提供了基本的设置功能，包括自动加载、自动保存�
    - 若包含不可直接转化为 JSON 的设置现，则需在`Serializers`和`Deserializers`中添加序列化与反序列化器
 
 ## 处理保存失败
-保存时可能会出现保存失败的情况，可以修改`src/main/modules/settings.ts`中`save`函数来处理错误。
+保存时可能会出现保存失败的情况，可以修改`src/main/modules/settings.ts`中`save`函数来处理错误。  
 例如：
 ```typescript
 async save() {
@@ -50,14 +50,14 @@ get<T extends keyof SettingsKeyMap>(key: T): SettingsKeyMap[T];
 ```typescript
 set<T extends keyof SettingsKeyMap>(key: T, value: SettingsKeyMap[T]): boolean;
 ```
-修改设置项，成功设置返回`undefined`，不存在该设置项时返回`'INVALID_KEY'`，值验证不通过返回`'INVALID_VALUE'`。
+修改设置项，成功设置返回`undefined`，不存在该设置项时返回`'INVALID_KEY'`，值验证不通过返回`'INVALID_VALUE'`。  
 不建议将该函数直接暴露给插件进程。
 
 #### reset
 ```typescript
 reset(): void;
 ```
-重置设置。
+重置设置。  
 不建议将该函数直接暴露给插件进程。
 
 ## 初始化设置

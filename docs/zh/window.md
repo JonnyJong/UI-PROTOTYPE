@@ -60,7 +60,7 @@ ipcRenderer.send('_scope_:event_name');
   });
   ```
 
-关于样式文件，请查阅[样式](../style)章节。
+关于样式文件，请查阅[样式](../style)章节。  
 关于 HTML 模板，请查阅[HTML 模板](../layout)章节。
 
 # API
@@ -78,6 +78,5 @@ initWindow(options: WindowInitOptions): BrowserWindow;
 ```typescript
 initMainWindow(): BrowserWindow;
 ```
-初始化主窗口。
-
+初始化主窗口。  
 建议尽早地初始化主窗口，提升用户体验。

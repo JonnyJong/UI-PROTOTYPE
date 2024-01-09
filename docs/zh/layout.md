@@ -3,7 +3,7 @@ title: HTML 模板
 ---
 
 # 概述
-UI-PROTOTYPE 使用 Pug 来编写 HTML 模板。
+UI-PROTOTYPE 使用 Pug 来编写 HTML 模板。  
 关于 Pug 使用方法，请查阅[Pug中文网](https://www.pugjs.cn)。
 
 # 使用说明
@@ -18,7 +18,7 @@ html
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
   body
 ```
-这将会生成一个基本的 HTML 文件，可以在`views`目录下编写其他部分并使用`include`引入到`_main.pug`中。
+这将会生成一个基本的 HTML 文件，可以在`views`目录下编写其他部分并使用`include`引入到`_main.pug`中。  
 如果某个模板文件或某个文件夹下的模板文件只用于生成`main.html`，可以在文件名开头添加`_`。
 
 ## 使用模板
