@@ -21,4 +21,4 @@ npm start
 ```
 
 ## Document / 文档
-- [中文](./docs/zh/Index.md)
+https://ui-prototype.jonnys.top

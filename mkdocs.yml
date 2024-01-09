@@ -1,0 +1,40 @@
+site_name: UI-PROTOTYPE Docs
+
+theme:
+  name: material
+  palette:
+    # Palette toggle for automatic mode
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to system preference
+  features:
+    - search.suggest
+    - search.highlight
+
+repo_url: https://github.com/JonnyJong/UI-PROTOTYPE
+repo_name: JonnyJong/UI-PROTOTYPE
+
+plugins:
+  - search
+
+extra:
+  homepage: https://ui-prototype.jonnys.top
+  alternate:
+    - name: 简体中文
+      link: /zh/
+      lang: zh
