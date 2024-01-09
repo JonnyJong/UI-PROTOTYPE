@@ -4,7 +4,7 @@ import { app, systemPreferences } from "electron";
 import t from "io-ts";
 import { isLeft } from "fp-ts/Either";
 import rfdc from "rfdc";
-import { saveFile } from "main/utils/fs";
+import { writeConfig } from "main/utils/fs";
 import { getDataPath } from "main/utils/path";
 import { readFile } from "fs/promises";
 
@@ -73,11 +73,7 @@ class Settings {
       data[key] = serializer ? serializer(value as any) : value as SerializedData;
     }
     // Save as JSON
-    await saveFile(
-      getDataPath('settings.json'),
-      JSON.stringify(data, undefined, 0),
-      'utf8',
-    );
+    await writeConfig('settings', data);
   };
   /**
    * Retrieves the value of a specific setting.

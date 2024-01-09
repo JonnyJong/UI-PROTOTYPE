@@ -19,11 +19,7 @@ UI-PROTOTYPE 提供了基本的设置功能，包括自动加载、自动保存�
 ```typescript
 async save() {
   // ...
-  let error = await saveFile(
-    getDataPath('settings.json'),
-    JSON.stringify(data, undefined, 0),
-    'utf8',
-  );
+  let error = await writeConfig('settings', data);
   if (!error) return;
   // 在此处添加错误处理相关代码
 };
