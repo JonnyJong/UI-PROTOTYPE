@@ -1,7 +1,7 @@
 import { readFile } from "fs/promises";
 import { LocaleDict, LocaleKeys } from "shared/types/locales";
 import { distPath } from "shared/utils/path";
-import { fallbackLocales } from "shared/config/default.json";
+import { alias, fallbackLocales } from "shared/config/locale.json";
 
 let localeDict: LocaleDict = {};
 
@@ -67,6 +67,11 @@ function mergeLocale(target: LocaleDict, source: LocaleDict): LocaleDict {
 
 async function readLocaleFile(name: string): Promise<LocaleDict | null> {
   try {
+    // Check alias
+    if (name in alias) {
+      name = alias[name as keyof typeof alias];
+    }
+    // Read file
     const dictJSON = await readFile(distPath('locales', name + '.json'), 'utf8');
     const dict = JSON.parse(dictJSON);
     if (typeof dict !== 'object') return null;

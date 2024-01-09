@@ -1,0 +1,6 @@
+{
+  "fallbackLocales": ["en", "zh-CN"],
+  "alias": {
+    "zh_hans_cn": "zh-CN"
+  }
+}
