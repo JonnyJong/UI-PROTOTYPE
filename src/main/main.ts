@@ -1,10 +1,13 @@
 import { Menu, app } from "electron";
 import { settings } from "./modules/settings";
+import { loadLocales } from "./ui/locale";
 
-app.on('ready', ()=>{
+app.on('ready', async ()=>{
   Menu.setApplicationMenu(null);
 
-  settings.init();
+  await settings.init();
+
+  await loadLocales(settings.get('languages'));
 });
 
 if (process.platform !== 'darwin') {
