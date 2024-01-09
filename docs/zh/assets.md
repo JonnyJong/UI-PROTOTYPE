@@ -8,13 +8,15 @@ UI-PROTOTYPE 默认将`src`下所有文件名开头不是`_`以及后缀名不�
 # 使用说明
 ## 添加资源文件
 若要添加资源文件，可参考以下方法：
+
 - 窗口的资源文件
   存放于`src/renderer/<窗口 ID>/assets`中。
 - 通用的资源文件
   存放于`src/shared/assets`中。
 
 ## 修改应用图标
-UI-PROTOTYPE 将应用图标存放于以下几个目录
+UI-PROTOTYPE 将应用图标存放于以下几个目录：
+
 - `resources`
 - `src/shared/assets`
 
