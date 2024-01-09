@@ -60,8 +60,8 @@ ipcRenderer.send('_scope_:event_name');
   });
   ```
 
-关于样式文件，请查阅[样式](./style)章节。
-关于 HTML 模板，请查阅[HTML 模板](./layout)章节。
+关于样式文件，请查阅[样式](../style)章节。
+关于 HTML 模板，请查阅[HTML 模板](../layout)章节。
 
 # API
 ## `main/ui/window`

@@ -37,4 +37,4 @@ npm run compile-pug
 ```
 
 ## 自动编译
-参考[使用 VSCode 开发](./vscode)章节。
+参考[使用 VSCode 开发](../vscode)章节。
