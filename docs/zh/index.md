@@ -2,5 +2,5 @@
 title: UI-PROTOTYPE 中文文档
 ---
 
-- [国际化](./locales)
+- [多语言支持](./locales)
 - [设置](./settings)
