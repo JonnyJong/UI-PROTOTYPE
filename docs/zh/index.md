@@ -8,4 +8,5 @@ title: UI-PROTOTYPE 中文文档
 - [样式](./style)
 - [HTML 模板](./layout)
 - [资源文件](./assets)
+- [图标](./icon)
 - [编译](./compile)
