@@ -8,7 +8,7 @@ const { copyAssets } = require("./assets");
 async function compileAll() {
   await compileLocales();
   await compilePug();
-  await eachInDir('./src/renderer', (file)=>{
+  await eachInDir('./src', (file)=>{
     if (path.parse(file).ext === '.styl') {
       return compileStyle(file);
     }
