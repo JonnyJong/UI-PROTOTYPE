@@ -7,7 +7,7 @@ async function copyAssets(src) {
   
   if (['.ts', '.styl'].includes(ext)) return;
 
-  let dest = src2dist(src, name);
+  let dest = src2dist(src, name + ext);
   try {
     await copyFile(src, dest);
   } catch (error) {

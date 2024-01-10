@@ -11,7 +11,7 @@ async function writeFile(file, data, encoding) {
 }
 
 async function copyFile(src, dest) {
-  const dir = path.dirname(src);
+  const dir = path.dirname(dest);
   if (!existsSync(dir)) {
     await fs.mkdir(dir, { recursive: true });
   }
