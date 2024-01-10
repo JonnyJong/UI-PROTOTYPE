@@ -1,7 +1,7 @@
 import { Deserializers, SerializedData, Serializers, SettingsErrorCode, SettingsKeyMap, Validators } from "shared/types/settings";
 import { color as DEFAULT_COLOR } from "shared/config/default.json";
 import { app, systemPreferences } from "electron";
-import t from "io-ts";
+import * as t from "io-ts";
 import { isLeft } from "fp-ts/Either";
 import rfdc from "rfdc";
 import { writeConfig } from "main/utils/fs";
