@@ -12,8 +12,8 @@ async function compileStyle(file) {
     const css = render(source, {
       paths: [dir],
       filename: base,
-      globals: {
-        config: getConfig,
+      functions: {
+        config: (file, keys)=>getConfig(file.string, keys.string),
       },
     });
     await writeFile(src2dist(file, name + '.css'), css, 'utf8');
