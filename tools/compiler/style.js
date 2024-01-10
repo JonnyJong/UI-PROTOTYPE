@@ -3,25 +3,7 @@ const { eachInDir, writeFile } = require('../shared/fs');
 const path = require('path');
 const { readFile } = require('fs/promises');
 const { src2dist } = require('../shared/path');
-
-function getConfig(file, keys) {
-  if (typeof file !== 'string') return;
-  if (typeof keys !== 'string') return;
-
-  let config;
-  try {
-    config = require(__dirname, '../../src/shared/config', file + '.json');
-  } catch {
-    return;
-  }
-
-  for (const key of keys.split('.')) {
-    if (typeof config !== 'object') return;
-    config = config[key];
-  }
-
-  return config;
-}
+const { getConfig } = require('../shared/config');
 
 async function compileStyle(file) {
   const source = await readFile(file, 'utf8');

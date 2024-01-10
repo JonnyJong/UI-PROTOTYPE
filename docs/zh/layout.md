@@ -25,4 +25,9 @@ html
 TODO...
 
 # API
-TODO...
+## config
+*该函数仅限 HTML 模板中使用。*
+```typescript
+config(file: string, keys: string): any;
+```
+用于读取`src/shared/config`下的配置文件对应的键值，不存在时返回`undefined`。
