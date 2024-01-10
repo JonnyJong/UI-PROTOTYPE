@@ -13,7 +13,7 @@ async function compile(name) {
     let html = renderFile(mainLayout, {
       config: getConfig,
     });
-    await writeFile(src2dist(mainLayout, 'main.html'), html, 'utf8');
+    await writeFile(src2dist(mainLayout, '../main.html'), html, 'utf8');
   } catch (error) {
     console.error(error);
   }
