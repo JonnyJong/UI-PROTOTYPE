@@ -117,7 +117,7 @@ function getWindowBgColor(): string {
     case 'dark':
       return windowBackground.dark;
     default:
-      return nativeTheme.shouldUseDarkColors ? windowBackground.light : windowBackground.dark;
+      return nativeTheme.shouldUseDarkColors ? windowBackground.dark : windowBackground.light;
   }
 }
 
