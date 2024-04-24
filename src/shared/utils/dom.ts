@@ -229,3 +229,6 @@ export function $<T extends HTMLElement = HTMLElement>(
 ): Dom<T> {
   return new Dom<T>(...args);
 }
+$.pug = Dom.pug;
+$.html = Dom.html;
+$.layout = Dom.layout;
