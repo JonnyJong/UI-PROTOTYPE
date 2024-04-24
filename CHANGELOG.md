@@ -7,3 +7,4 @@
 - Internalization（国际化）
 - Settings（设置）
 - Window（窗口）
+- Icon（图标）
