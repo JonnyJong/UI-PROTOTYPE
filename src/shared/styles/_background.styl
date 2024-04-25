@@ -5,8 +5,19 @@
     position absolute
     top 0
     left 0
-.mica-light
-  opacity .1
+    opacity .1
+    transition .3s opacity
+.mica-dark
+  opacity .4
+.mica-alt .mica-dark
+  opacity 1
+body.blur
+  .mica *
+    opacity 0
+
 @media (prefers-color-scheme: light)
   .mica-dark
+    display none
+@media (prefers-color-scheme: dark)
+  .mica-light
     display none

@@ -187,6 +187,10 @@ export function initMainWindow(): BrowserWindow {
     autoShow: true,
   });
 
+  nativeTheme.addListener('updated', () => {
+    mainWindow.setBackgroundColor(getWindowBgColor());
+  });
+
   // Dev
   if (!app.isPackaged) {
     mainWindow.webContents.openDevTools();
