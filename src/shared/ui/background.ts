@@ -143,6 +143,7 @@ function createCanvas({ width, height, scale }: ScreenSize, sampleData: ImageDat
 }
 
 export async function initMica() {
+  // Get Sample Data
   let wallpaperPath = await ipcRenderer.invoke("os:getWallpaperPath");
   if (!wallpaperPath) return;
   let screenSize = (await ipcRenderer.invoke("os:getScreenSize")) as ScreenSize;
@@ -153,13 +154,14 @@ export async function initMica() {
   );
   let micaDiv = $.new('div');
   micaDiv.classList.add('mica')
+  // Create Mica Canvas
   let lightCanvas = createCanvas(screenSize, sampleData, 94);
   lightCanvas.classList.add('mica-light');
   let darkCanvas = createCanvas(screenSize, sampleData, 6);
   darkCanvas.classList.add('mica-dark');
   micaDiv.append(lightCanvas, darkCanvas);
   document.body.prepend(micaDiv);
-  // TODO：绑定窗口移动事件
+  // Handle Window Move
   ipcRenderer.on('win:move', (_, [x, y]) => {
     micaDiv.style.left = `-${x}px`;
     micaDiv.style.top = `-${y}px`;
