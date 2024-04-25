@@ -13,6 +13,10 @@ function getRendererCwd() {
 const layoutRoot = path.join(getRendererCwd(), "views");
 const sharedLayoutRoot = path.join(__dirname, "views");
 
+interface DOMTagNameMap extends HTMLElementTagNameMap {
+  // Add custom elements here
+}
+
 class Class<T extends HTMLElement> {
   #dom: Dom<T>;
   constructor(dom: Dom<T>) {
@@ -118,6 +122,22 @@ export class Dom<T extends HTMLElement = HTMLElement> {
         option
       )
     );
+  }
+  static new<K extends keyof DOMTagNameMap>(
+    tagName: K,
+    pack?: false
+  ): DOMTagNameMap[K];
+  static new<K extends keyof DOMTagNameMap>(
+    tagName: K,
+    pack: true
+  ): Dom<DOMTagNameMap[K]>;
+  static new<K extends keyof DOMTagNameMap>(
+    tagName: K,
+    pack: boolean = false
+  ): DOMTagNameMap[K] | Dom<DOMTagNameMap[K]> {
+    let dom = document.createElement(tagName);
+    if (!pack) return dom;
+    return new Dom<DOMTagNameMap[K]>(dom);
   }
   filter(callback: (value: T, index: number, array: T[]) => boolean) {
     return new Dom<T>(...this.#doms.filter(callback));
@@ -232,3 +252,4 @@ export function $<T extends HTMLElement = HTMLElement>(
 $.pug = Dom.pug;
 $.html = Dom.html;
 $.layout = Dom.layout;
+$.new = Dom.new;
