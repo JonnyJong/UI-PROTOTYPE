@@ -2,6 +2,7 @@ import Color from "color";
 import { ipcRenderer } from "electron";
 import { $ } from "shared/utils/dom";
 import { range } from "shared/utils/math";
+import { micaAlt } from "shared/config/ui.json";
 
 const SAMPLE_FACTOR = 100;
 const BLUR_RADIUS = 4;
@@ -153,7 +154,8 @@ export async function initMica() {
     screenSize.height
   );
   let micaDiv = $.new('div');
-  micaDiv.classList.add('mica')
+  micaDiv.classList.add('mica');
+  micaDiv.classList.toggle('mica-alt', micaAlt);
   // Create Mica Canvas
   let lightCanvas = createCanvas(screenSize, sampleData, 94);
   lightCanvas.classList.add('mica-light');
