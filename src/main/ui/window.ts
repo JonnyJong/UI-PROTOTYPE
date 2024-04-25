@@ -96,12 +96,25 @@ function windowIpcHandler(
 function setWindowEvent(window: BrowserWindow) {
   window.on("blur", () => window.webContents.send("win:active", false));
   window.on("focus", () => window.webContents.send("win:active", true));
-  window.on("maximize", () => window.webContents.send("win:resize", true));
-  window.on("restore", () => window.webContents.send("win:resize", false));
-  window.on("unmaximize", () => window.webContents.send("win:resize", false));
-  window.on("resized", () =>
-    window.webContents.send("win:resize", window.isMaximized())
-  );
+  window.on("maximize", () => {
+    window.webContents.send("win:resize", true);
+    window.webContents.send("win:move", [0, 0]);
+  });
+  window.on("restore", () => {
+    window.webContents.send("win:resize", false);
+    window.webContents.send("win:move", window.getPosition());
+  });
+  window.on("unmaximize", () => {
+    window.webContents.send("win:resize", false);
+    window.webContents.send("win:move", window.getPosition());
+  });
+  window.on("resize", () => {
+    window.webContents.send("win:resize", window.isMaximized());
+    window.webContents.send("win:move", window.getPosition());
+  });
+  window.on("move", () => {
+    window.webContents.send("win:move", window.getPosition());
+  });
   window.webContents.on("ipc-message", (_, channel, ...args) =>
     windowIpcHandler(window, channel, ...args)
   );
