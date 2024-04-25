@@ -1,11 +1,18 @@
 import { ipcMain, screen } from "electron";
 import { getWallpaperPath } from "main/modules/wallpaper";
+import { getLocaleDict } from "./locale";
 
 export function initEvents() {
-  ipcMain.handle('win:controls', (event)=>{
-    event.sender
+  // Locale
+  ipcMain.handle('locale:get', () => {
+    return getLocaleDict();
   });
-  // TODO: 处理获取窗口控制按钮的事件
+  // Window
+  ipcMain.handle('win:controls', (event)=>{
+    // TODO: 处理获取窗口控制按钮的事件
+    event.sender;
+  });
+  // OS
   ipcMain.handle('os:getScreenSize', () => {
     const display = screen.getDisplayNearestPoint(screen.getCursorScreenPoint());
     return {
