@@ -1,5 +1,5 @@
 {
-  "filepath": "./src/**/*",
+  "filepath": "./src/",
   "experimentalTernaries": false,
   "printWidth": 80,
   "tabWidth": 2,
