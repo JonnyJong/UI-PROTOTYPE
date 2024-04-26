@@ -1,0 +1,38 @@
+input
+  all unset
+  box-sizing border-box
+  position relative
+  padding 5px 10px
+  border-radius 5px
+  border 1.5px solid #0000000f
+  border-bottom-color #00000072
+  background #ffffffb3
+  &::placeholder
+    color #4d4d4de2
+  &:hover:not(:disabled)
+    background #fafafa80
+  &:disabled
+    background #fafafa4d
+    border-color #0000000d
+    &::placeholder
+      color #5656568b
+  @media (prefers-color-scheme: dark)
+    background #ffffff0f
+    border-color #ffffff03
+    border-bottom-color #ffffff84
+    &::placeholder
+      color #ffffffc5
+    &:hover:not(:disabled)
+      background #ffffff15
+      border-bottom-color #ffffff81
+    &:focus
+      background #1e1e1eb3
+    &:disabled
+      background #ffffff0b
+      border-color #ffffff07
+      &::placeholder
+        color #ffffff5d
+  &:focus
+    border-bottom 2px solid var(--theme)
+    padding-bottom 4px
+    background #fff
