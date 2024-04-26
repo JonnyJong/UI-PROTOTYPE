@@ -1,14 +1,14 @@
-import { BrowserWindow, BrowserWindowConstructorOptions } from "electron";
+import { BrowserWindow, BrowserWindowConstructorOptions } from 'electron';
 
 export type WindowInitOptions = {
-  construct?: BrowserWindowConstructorOptions,
-  root: string,
-  autoShow?: boolean,
+  construct?: BrowserWindowConstructorOptions;
+  root: string;
+  autoShow?: boolean;
   controls?: {
-    close: 'close' | 'hide' | 'none',
-    resize: boolean,
-    minimize: boolean,
-  },
+    close: 'close' | 'hide' | 'none';
+    resize: boolean;
+    minimize: boolean;
+  };
 };
 
 export type WindowStateTemplate = [
@@ -19,7 +19,11 @@ export type WindowStateTemplate = [
   y: number,
 ];
 
-export type WindowIpcEventHandler = (window: BrowserWindow, event: string, ...args: any[])=>any;
+export type WindowIpcEventHandler = (
+  window: BrowserWindow,
+  event: string,
+  ...args: any[]
+) => any;
 
 export class IWindowState {
   constructor(window: BrowserWindow, id: string);
@@ -34,12 +38,12 @@ export interface IWindowControls {
 }
 
 export type WindowConstructorOptions = {
-  autoShow?: boolean,
+  autoShow?: boolean;
   controls?: {
     close?: 'close' | 'hide' | 'none';
     resize?: boolean;
     minimize?: boolean;
-  },
+  };
 } & BrowserWindowConstructorOptions;
 
 export class IWindow {

@@ -1,4 +1,4 @@
-import { locale } from "shared/ui/locale";
+import { locale } from 'shared/ui/locale';
 
 export class UILang extends HTMLElement {
   #inited = false;

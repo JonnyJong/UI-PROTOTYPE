@@ -1,14 +1,17 @@
-import Color from "color";
-import { ipcRenderer } from "electron";
-import { $ } from "shared/utils/dom";
-import { range } from "shared/utils/math";
-import { micaAlt } from "shared/config/ui.json";
+import Color from 'color';
+import { ipcRenderer } from 'electron';
+import { $ } from 'shared/utils/dom';
+import { range } from 'shared/utils/math';
+import { micaAlt } from 'shared/config/ui.json';
 
 const SAMPLE_FACTOR = 100;
 const BLUR_RADIUS = 4;
 const BLUR_GRADIENT = 0.5;
 const RES_SCALE = 200;
-const blurParamA = (BLUR_RADIUS - Math.sqrt(4 * BLUR_RADIUS * BLUR_GRADIENT + Math.pow(BLUR_RADIUS, 2))) / 2;
+const blurParamA =
+  (BLUR_RADIUS -
+    Math.sqrt(4 * BLUR_RADIUS * BLUR_GRADIENT + Math.pow(BLUR_RADIUS, 2))) /
+  2;
 const blurParamB = BLUR_GRADIENT / blurParamA + 1;
 
 type ImageData = {
@@ -23,7 +26,7 @@ async function getSampleData(
   height: number
 ): Promise<ImageData> {
   // Load Image
-  let img = $.new("img");
+  let img = $.new('img');
   img.src = src;
   await new Promise((resolve) => (img.onload = resolve));
   // Basic Param
@@ -32,10 +35,10 @@ async function getSampleData(
   let ratio = w / h;
   let imgRatio = img.width / img.height;
   // Canvas
-  let canvas = $.new("canvas");
+  let canvas = $.new('canvas');
   canvas.width = w;
   canvas.height = h;
-  let ctx = canvas.getContext("2d")!;
+  let ctx = canvas.getContext('2d')!;
   // Scale
   let sx = 0;
   let sy = 0;
@@ -120,15 +123,19 @@ interface ScreenSize {
   height: number;
   scale: number;
 }
-function createCanvas({ width, height, scale }: ScreenSize, sampleData: ImageData, value: number): HTMLCanvasElement {
+function createCanvas(
+  { width, height, scale }: ScreenSize,
+  sampleData: ImageData,
+  value: number
+): HTMLCanvasElement {
   let resHeight = Math.floor(height / RES_SCALE);
   let resWidth = Math.floor(width / RES_SCALE);
-  let canvas = $.new("canvas");
+  let canvas = $.new('canvas');
   canvas.width = resWidth;
   canvas.height = resHeight;
   canvas.style.width = `${width / scale}px`;
   canvas.style.height = `${height / scale}px`;
-  let ctx = canvas.getContext("2d")!;
+  let ctx = canvas.getContext('2d')!;
   let data = ctx.createImageData(resWidth, resHeight);
   blurAndScale(
     sampleData,
@@ -137,7 +144,7 @@ function createCanvas({ width, height, scale }: ScreenSize, sampleData: ImageDat
       width: resWidth,
       height: resHeight,
     },
-    value,
+    value
   );
   ctx.putImageData(data, 0, 0);
   return canvas;
@@ -145,9 +152,9 @@ function createCanvas({ width, height, scale }: ScreenSize, sampleData: ImageDat
 
 export async function initMica() {
   // Get Sample Data
-  let wallpaperPath = await ipcRenderer.invoke("os:getWallpaperPath");
+  let wallpaperPath = await ipcRenderer.invoke('os:getWallpaperPath');
   if (!wallpaperPath) return;
-  let screenSize = (await ipcRenderer.invoke("os:getScreenSize")) as ScreenSize;
+  let screenSize = (await ipcRenderer.invoke('os:getScreenSize')) as ScreenSize;
   let sampleData = await getSampleData(
     wallpaperPath,
     screenSize.width,

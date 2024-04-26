@@ -1,10 +1,10 @@
-import { Menu, app } from "electron";
-import { settings } from "./modules/settings";
-import { loadLocales } from "./ui/locale";
-import { initMainWindow } from "./ui/window";
-import { initEvents } from "./ui/event";
+import { Menu, app } from 'electron';
+import { settings } from './modules/settings';
+import { loadLocales } from './ui/locale';
+import { initMainWindow } from './ui/window';
+import { initEvents } from './ui/event';
 
-app.on('ready', async ()=>{
+app.on('ready', async () => {
   Menu.setApplicationMenu(null);
 
   await settings.init();
@@ -17,5 +17,5 @@ app.on('ready', async ()=>{
 });
 
 if (process.platform !== 'darwin') {
-  app.on('window-all-closed', ()=>app.quit());
+  app.on('window-all-closed', () => app.quit());
 }

@@ -1,6 +1,6 @@
-import { BrowserWindow, app, nativeTheme, screen } from "electron";
-import { locale } from "./locale";
-import { settings } from "../modules/settings";
+import { BrowserWindow, app, nativeTheme, screen } from 'electron';
+import { locale } from './locale';
+import { settings } from '../modules/settings';
 import {
   IWindow,
   IWindowControls,
@@ -9,25 +9,25 @@ import {
   WindowInitOptions,
   WindowIpcEventHandler,
   WindowStateTemplate,
-} from "main/types/window";
-import { windowBackground } from "shared/config/default.json";
-import { distPath } from "shared/utils/path";
-import { readConfig, writeConfig } from "main/utils/fs";
+} from 'main/types/window';
+import { windowBackground } from 'shared/config/default.json';
+import { distPath } from 'shared/utils/path';
+import { readConfig, writeConfig } from 'main/utils/fs';
 
 const IpcEventHandlers: { [scope: string]: WindowIpcEventHandler } = {
   win: (window, event) => {
     switch (event) {
-      case "minimize":
+      case 'minimize':
         return window.minimize();
-      case "resize":
+      case 'resize':
         if (window.isMaximized()) return window.restore();
         return window.maximize();
-      case "close":
+      case 'close':
         return window.close();
-      case "hide":
+      case 'hide':
         return window.hide();
-      case "isMaximized":
-        return window.webContents.send("win:resize", window.isMaximized());
+      case 'isMaximized':
+        return window.webContents.send('win:resize', window.isMaximized());
     }
   },
 };
@@ -46,11 +46,11 @@ class WindowState implements IWindowState {
     this.#window = window;
     this.#id = id;
 
-    this.#window.on("resized", () => this.save());
-    this.#window.on("moved", () => this.save());
-    this.#window.on("maximize", () => this.save());
-    this.#window.on("unmaximize", () => this.save());
-    this.#window.on("restore", () => this.save());
+    this.#window.on('resized', () => this.save());
+    this.#window.on('moved', () => this.save());
+    this.#window.on('maximize', () => this.save());
+    this.#window.on('unmaximize', () => this.save());
+    this.#window.on('restore', () => this.save());
   }
   async save() {
     if (this.#window.isMaximized()) {
@@ -59,11 +59,11 @@ class WindowState implements IWindowState {
       let { width, height, x, y } = this.#window.getBounds();
       this.#state = [false, width, height, x, y];
     }
-    await writeConfig("win-state-" + this.#id, this.#state);
+    await writeConfig('win-state-' + this.#id, this.#state);
   }
   async show() {
     this.#state = await readConfig(
-      "win-state-" + this.#id,
+      'win-state-' + this.#id,
       getWindowStateTemplate()
     );
     this.#window.setSize(this.#state[1], this.#state[2], false);
@@ -75,11 +75,11 @@ class WindowState implements IWindowState {
 
 function setWindowIcon(window: BrowserWindow) {
   switch (process.platform) {
-    case "win32":
-      window.setIcon(distPath("shared/assets/icon.ico"));
+    case 'win32':
+      window.setIcon(distPath('shared/assets/icon.ico'));
       break;
-    case "linux":
-      window.setIcon(distPath("shared/assets/icon.png"));
+    case 'linux':
+      window.setIcon(distPath('shared/assets/icon.png'));
       break;
   }
 }
@@ -89,33 +89,33 @@ function windowIpcHandler(
   channel: string,
   ...args: any[]
 ) {
-  let scope = channel.split(":")[0];
+  let scope = channel.split(':')[0];
   if (!(scope in IpcEventHandlers)) return;
   IpcEventHandlers[scope](window, channel.slice(scope.length + 1), ...args);
 }
 function setWindowEvent(window: BrowserWindow) {
-  window.on("blur", () => window.webContents.send("win:active", false));
-  window.on("focus", () => window.webContents.send("win:active", true));
-  window.on("maximize", () => {
-    window.webContents.send("win:resize", true);
-    window.webContents.send("win:move", [0, 0]);
+  window.on('blur', () => window.webContents.send('win:active', false));
+  window.on('focus', () => window.webContents.send('win:active', true));
+  window.on('maximize', () => {
+    window.webContents.send('win:resize', true);
+    window.webContents.send('win:move', [0, 0]);
   });
-  window.on("restore", () => {
-    window.webContents.send("win:resize", false);
-    window.webContents.send("win:move", window.getPosition());
+  window.on('restore', () => {
+    window.webContents.send('win:resize', false);
+    window.webContents.send('win:move', window.getPosition());
   });
-  window.on("unmaximize", () => {
-    window.webContents.send("win:resize", false);
-    window.webContents.send("win:move", window.getPosition());
+  window.on('unmaximize', () => {
+    window.webContents.send('win:resize', false);
+    window.webContents.send('win:move', window.getPosition());
   });
-  window.on("resize", () => {
-    window.webContents.send("win:resize", window.isMaximized());
-    window.webContents.send("win:move", window.getPosition());
+  window.on('resize', () => {
+    window.webContents.send('win:resize', window.isMaximized());
+    window.webContents.send('win:move', window.getPosition());
   });
-  window.on("move", () => {
-    window.webContents.send("win:move", window.getPosition());
+  window.on('move', () => {
+    window.webContents.send('win:move', window.getPosition());
   });
-  window.webContents.on("ipc-message", (_, channel, ...args) =>
+  window.webContents.on('ipc-message', (_, channel, ...args) =>
     windowIpcHandler(window, channel, ...args)
   );
 }
@@ -131,7 +131,7 @@ function setWindowEvent(window: BrowserWindow) {
 export function initWindow(options: WindowInitOptions): BrowserWindow {
   options.construct!.webPreferences = Object.assign(
     {
-      preload: distPath("renderer", options.root, "main.js"),
+      preload: distPath('renderer', options.root, 'main.js'),
     },
     options.construct?.webPreferences
   );
@@ -139,19 +139,19 @@ export function initWindow(options: WindowInitOptions): BrowserWindow {
   let window = new BrowserWindow(options.construct);
   setWindowIcon(window);
   setWindowEvent(window);
-  window.loadFile(distPath("renderer", options.root, "main.html"));
+  window.loadFile(distPath('renderer', options.root, 'main.html'));
 
-  let state = new WindowState(window, options.root.split("/").pop() as string);
-  if (options.autoShow) window.on("ready-to-show", () => state.show());
+  let state = new WindowState(window, options.root.split('/').pop() as string);
+  if (options.autoShow) window.on('ready-to-show', () => state.show());
 
   return window;
 }
 
 function getWindowBgColor(): string {
-  switch (settings.get("theme")) {
-    case "light":
+  switch (settings.get('theme')) {
+    case 'light':
       return windowBackground.light;
-    case "dark":
+    case 'dark':
       return windowBackground.dark;
     default:
       return nativeTheme.shouldUseDarkColors
@@ -171,7 +171,7 @@ export function initMainWindow(): BrowserWindow {
       frame: false,
       resizable: true,
       enableLargerThanScreen: false,
-      title: locale("app.name"),
+      title: locale('app.name'),
       backgroundColor: getWindowBgColor(),
       // XXX: Modify the following properties
       // minHeight: 0,
@@ -179,11 +179,11 @@ export function initMainWindow(): BrowserWindow {
       webPreferences: {
         nodeIntegration: true,
         contextIsolation: false,
-        defaultEncoding: "utf-8",
+        defaultEncoding: 'utf-8',
         spellcheck: false,
       },
     },
-    root: "main",
+    root: 'main',
     autoShow: true,
   });
 
@@ -206,7 +206,7 @@ export class Window implements IWindow {
   constructor(root: string, options?: WindowConstructorOptions) {
     this.window = new BrowserWindow();
     this.controls = {
-      close: "close",
+      close: 'close',
       minimize: true,
       resize: true,
     };

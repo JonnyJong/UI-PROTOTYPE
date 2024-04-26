@@ -1,8 +1,8 @@
-import { readFile } from "fs/promises";
-import { LocaleDict, LocaleKeys } from "shared/types/locales";
-import { distPath } from "shared/utils/path";
-import { alias, fallbackLocales } from "shared/config/locale.json";
-import rfdc from "rfdc";
+import { readFile } from 'fs/promises';
+import { LocaleDict, LocaleKeys } from 'shared/types/locales';
+import { distPath } from 'shared/utils/path';
+import { alias, fallbackLocales } from 'shared/config/locale.json';
+import rfdc from 'rfdc';
 
 let localeDict: LocaleDict = {};
 
@@ -16,7 +16,7 @@ Part: Locale Getter
  */
 export function locale(keys: LocaleKeys): string {
   if (typeof keys !== 'string') return '';
-  
+
   let currentValue: string | LocaleDict = localeDict;
   for (const key of keys.split('.')) {
     if (typeof currentValue !== 'object') return keys;
@@ -47,9 +47,12 @@ export function deepCopy(target: any, source: any): any {
   }
 
   if (target === undefined) return source;
-  
+
   let result: LocaleDict = {};
-  let keys: Set<string> = new Set([...Object.keys(target), ...Object.keys(source)]);
+  let keys: Set<string> = new Set([
+    ...Object.keys(target),
+    ...Object.keys(source),
+  ]);
   for (const key of keys) {
     if (typeof source[key] === 'object') {
       result[key] = deepCopy(target[key], source[key]);
@@ -73,7 +76,10 @@ async function readLocaleFile(name: string): Promise<LocaleDict | null> {
       name = alias[name as keyof typeof alias];
     }
     // Read file
-    const dictJSON = await readFile(distPath('locales', name + '.json'), 'utf8');
+    const dictJSON = await readFile(
+      distPath('locales', name + '.json'),
+      'utf8'
+    );
     const dict = JSON.parse(dictJSON);
     if (typeof dict !== 'object') return null;
     return dict;
@@ -105,6 +111,6 @@ export async function loadLocales(localesList: string[]): Promise<void> {
     if (dict === null) continue;
     newLocaleDict = mergeLocale(newLocaleDict, dict);
   }
-  
+
   localeDict = newLocaleDict;
 }

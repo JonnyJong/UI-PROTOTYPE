@@ -2,16 +2,16 @@
 This module only work on renderer process!
 */
 
-import path from "path";
-import { render, renderFile } from "pug";
+import path from 'path';
+import { render, renderFile } from 'pug';
 
 function getRendererCwd() {
   let mod = module;
   while (mod.parent) mod = mod.parent;
   return mod.path;
 }
-const layoutRoot = path.join(getRendererCwd(), "views");
-const sharedLayoutRoot = path.join(__dirname, "views");
+const layoutRoot = path.join(getRendererCwd(), 'views');
+const sharedLayoutRoot = path.join(__dirname, 'views');
 
 interface DOMTagNameMap extends HTMLElementTagNameMap {
   // Add custom elements here
@@ -81,7 +81,7 @@ export class Dom<T extends HTMLElement = HTMLElement> {
     this.#class = new Class(this);
     this.#attr = new Attribute(this);
     for (const arg of args) {
-      if (typeof arg === "string") {
+      if (typeof arg === 'string') {
         document.querySelectorAll<T>(arg).forEach((e) => this.#doms.push(e));
         continue;
       }
@@ -102,7 +102,7 @@ export class Dom<T extends HTMLElement = HTMLElement> {
     return Dom.html<T>(render(pug, options));
   }
   static html<T extends HTMLElement = HTMLElement>(html: string): Dom<T> {
-    let dom = document.createElement("div");
+    let dom = document.createElement('div');
     dom.innerHTML = html;
     return new Dom<T>(
       ...[...dom.children].map((e) => {
@@ -118,7 +118,7 @@ export class Dom<T extends HTMLElement = HTMLElement> {
   ): Dom<T> {
     return Dom.html<T>(
       renderFile(
-        path.join(shared ? sharedLayoutRoot : layoutRoot, name + ".pug"),
+        path.join(shared ? sharedLayoutRoot : layoutRoot, name + '.pug'),
         option
       )
     );

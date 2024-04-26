@@ -1,5 +1,5 @@
-import { app } from "electron";
-import path from "path";
+import { app } from 'electron';
+import path from 'path';
 
 /**
  * Retrieves the path for a specified data file.
@@ -7,9 +7,5 @@ import path from "path";
  * @returns - The complete path of the data file.
  */
 export function getDataPath(filename: string): string {
-  return path.join(
-    app.getPath('appData'),
-    app.getName(),
-    filename,
-  );
+  return path.join(app.getPath('appData'), app.getName(), filename);
 }

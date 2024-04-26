@@ -1,9 +1,9 @@
-import { Abortable } from "events";
-import { Mode, ObjectEncodingOptions, OpenMode, PathLike } from "fs";
-import { FileHandle, mkdir, readFile, writeFile } from "fs/promises";
-import path from "path";
-import { Stream } from "stream";
-import { getDataPath } from "./path";
+import { Abortable } from 'events';
+import { Mode, ObjectEncodingOptions, OpenMode, PathLike } from 'fs';
+import { FileHandle, mkdir, readFile, writeFile } from 'fs/promises';
+import path from 'path';
+import { Stream } from 'stream';
+import { getDataPath } from './path';
 
 /**
  * Writes data to a file, automatically creating the necessary folders if they don't exist.
@@ -23,11 +23,11 @@ export async function saveFile(
     | Stream,
   options?:
     | (ObjectEncodingOptions & {
-      mode?: Mode | undefined;
-      flag?: OpenMode | undefined;
-    } & Abortable)
+        mode?: Mode | undefined;
+        flag?: OpenMode | undefined;
+      } & Abortable)
     | BufferEncoding
-    | null,
+    | null
 ): Promise<void | Error> {
   let dir: string;
   if (typeof file === 'string') {
@@ -52,11 +52,14 @@ export async function saveFile(
  * @param defaultConfig - The default configuration to return if reading fails.
  * @returns - A promise that resolves with the configuration object.
  */
-export async function readConfig<T = any>(name: string, defaultConfig: T): Promise<T> {
+export async function readConfig<T = any>(
+  name: string,
+  defaultConfig: T
+): Promise<T> {
   let result: T = defaultConfig;
   try {
     result = JSON.parse(await readFile(getDataPath(name + '.json'), 'utf8'));
-  } catch { }
+  } catch {}
   return result;
 }
 
@@ -67,10 +70,13 @@ export async function readConfig<T = any>(name: string, defaultConfig: T): Promi
  * @returns - A promise that resolves when the save is successful
  * or rejects with an Error if the save fails.
  */
-export async function writeConfig<T = any>(name: string, config: T): Promise<void | Error> {
+export async function writeConfig<T = any>(
+  name: string,
+  config: T
+): Promise<void | Error> {
   return await saveFile(
     getDataPath(name + '.json'),
     JSON.stringify(config, undefined, 0),
-    'utf8',
+    'utf8'
   );
 }
