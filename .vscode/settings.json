@@ -22,5 +22,8 @@
         "cmd": "npm run compile-pug"
       }
     ]
-  }
+  },
+  "editor.formatOnPaste": true,
+  "editor.formatOnType": true,
+  "editor.formatOnSave": true
 }
