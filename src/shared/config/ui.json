@@ -1,3 +1,4 @@
 {
-  "micaAlt": false
+  "micaAlt": false,
+  "safetyZone": [30, 0, 0, 0]
 }
