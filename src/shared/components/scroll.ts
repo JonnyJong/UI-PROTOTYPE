@@ -3,6 +3,7 @@ import { $ } from 'shared/utils/dom';
 const SCROLL_INCREMENTAL = 32;
 
 export class UIScroll extends HTMLElement {
+  #inited = false;
   #track = $.pug<HTMLDivElement>('.ui-scroll-track').at(0);
   #thumb = $.pug<HTMLDivElement>('.ui-scroll-thumb').at(0);
   #btnUp = $.pug<HTMLDivElement>('.ui-scroll-btn-up.icon.icon-CaretSolidUp').at(
@@ -25,7 +26,6 @@ export class UIScroll extends HTMLElement {
     this.#horizontal = this.hasAttribute('horizontal');
     let target = this.getAttribute('target');
     if (target) this.target = document.querySelector(target);
-    this.append(this.#track, this.#thumb, this.#btnUp, this.#btnDown);
     this.#resizeObserver.observe(this);
     // Event
     this.#btnUp.addEventListener('click', () => {
@@ -48,6 +48,7 @@ export class UIScroll extends HTMLElement {
     });
     this.addEventListener('pointerdown', (e) => {
       if (!this.#target) return;
+      e.preventDefault();
       let {
         [this.#horizontal ? 'left' : 'top']: start,
         [this.#horizontal ? 'width' : 'height']: length,
@@ -72,6 +73,11 @@ export class UIScroll extends HTMLElement {
     });
   }
   //#region Private
+  connectedCallback() {
+    if (this.#inited) return;
+    this.#inited = true;
+    this.append(this.#track, this.#thumb, this.#btnUp, this.#btnDown);
+  }
   #dragHandler = (e: PointerEvent) => {
     if (!this.#target) return;
     let offset =
@@ -95,16 +101,19 @@ export class UIScroll extends HTMLElement {
       this.classList.add('ui-scroll-hidden');
       return;
     }
-    let size =
+    let targetSize =
       this.#target.getBoundingClientRect()[
         this.#horizontal ? 'width' : 'height'
       ];
-    let scrollSize =
+    let targetScrollSize =
       this.#target[this.#horizontal ? 'scrollWidth' : 'scrollHeight'];
-    if (this.#targetSize === size && this.#targetScrollSize === scrollSize)
-      return;
-    this.#targetSize = size;
-    this.#targetScrollSize = scrollSize;
+    if (
+      this.#targetSize === targetSize &&
+      this.#targetScrollSize === targetScrollSize
+    )
+      return this.#scrollHandler();
+    this.#targetSize = targetSize;
+    this.#targetScrollSize = targetScrollSize;
     this.#trackSize =
       this.getBoundingClientRect()[this.#horizontal ? 'width' : 'height'] - 32;
     // Set Scrollbar Style
@@ -127,14 +136,14 @@ export class UIScroll extends HTMLElement {
       subtree: true,
       childList: true,
     });
-    this.#target.addEventListener('scroll', this.#scrollHandler);
+    this.#target.addEventListener('scroll', this.#observerHandler);
     this.#observerHandler();
   }
   #unbindTarget() {
     if (this.#target === null) return;
     this.#resizeObserver.unobserve(this.#target);
     this.#mutationObserver.disconnect();
-    this.#target.removeEventListener('scroll', this.#scrollHandler);
+    this.#target.removeEventListener('scroll', this.#observerHandler);
   }
   //#region Public
   get horizontal() {
