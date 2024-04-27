@@ -1,0 +1,89 @@
+::-webkit-scrollbar
+  display none
+
+ui-scroll
+  display block
+  position relative
+  width 14px
+  height 100%
+  padding 1px
+  transition .1s opacity
+  &.ui-scroll-hidden
+    opacity 0
+    pointer-events none
+  .ui-scroll-track
+    border-radius 16px
+    width 100%
+    height 100%
+    background #fffa
+    backdrop-filter blur(20px) saturate(5)
+    opacity 0
+    transition opacity .1s .5s
+  .ui-scroll-thumb
+    position absolute
+    background #0008
+    width 2px
+    // height calc(100% - 32px)
+    top 16px
+    right 4px
+    border-radius 6px
+    transition width .1s .5s, height .1s .5s
+  .ui-scroll-btn-up
+  .ui-scroll-btn-down
+    position absolute
+    font-size 8px
+    color #0008
+    opacity 0
+    transition opacity .1s .5s
+    &:hover
+      color #000d
+    &:active
+      scale .8
+  .ui-scroll-btn-up
+    top 5px
+    left 3px
+  .ui-scroll-btn-down
+    bottom 5px
+    left 3px
+  &:hover
+  &:active
+    .ui-scroll-track
+    .ui-scroll-btn-up
+    .ui-scroll-btn-down
+      opacity 1
+    &:not([horizontal])
+      .ui-scroll-thumb
+        width 6px
+  &[horizontal]
+    width 100%
+    height 14px
+    .icon
+      rotate -90deg
+    .ui-scroll-btn-up
+      left 5px
+      top 3px
+    .ui-scroll-btn-down
+      left unset
+      right 5px
+      bottom 3px
+    .ui-scroll-thumb
+      height 2px
+      // width calc(100% - 32px)
+      left 16px
+      bottom 4px
+      top unset
+      right unset
+    &:hover
+    &:active
+      .ui-scroll-thumb
+        height 6px
+  @media (prefers-color-scheme: dark)
+    .ui-scroll-track
+      background #000a
+    .ui-scroll-btn-up
+    .ui-scroll-btn-down
+      color #fff8
+      &:hover
+        color #fffd
+    .ui-scroll-thumb
+      background #fff8
