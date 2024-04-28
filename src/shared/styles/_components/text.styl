@@ -1,0 +1,221 @@
+@keyframes ui-text-suggest-show
+  0%
+    translate 0 16px
+    opacity 0
+
+ui-text
+  display block
+  position relative
+  --max-height unset
+  --max-height 20vh
+  &[disabled]
+    .ui-text-header
+      cursor default
+      color #00000066
+    .ui-text-indicator
+      background #0000000f
+  &:hover
+    .ui-text-input
+      background #fafafa80
+.ui-text-header
+  display block
+  cursor text
+  padding-bottom 12px
+  &:empty
+    display none
+  &:not(:empty)~.ui-text-placeholder
+    top calc(var(--ui-text-header-height) + 2px)
+.ui-text-placeholder
+  position absolute
+  pointer-events none
+  left 1.5px
+  top calc(var(--ui-text-header-height) + 1px)
+  padding 5px 10px
+  color #0000005c
+.ui-text-placeholder-hidden
+  display none
+.ui-text-input
+  all unset
+  box-sizing border-box
+  position relative
+  display block
+  padding 5px
+  padding-left s('max(calc(4px + var(--ui-text-btn-left)), 10px)')
+  padding-right s('max(calc(4px + var(--ui-text-btn-right)), 10px)')
+  margin 1.5px
+  width calc(100% - 3px)
+  bottom 1.5px
+  border-radius 3.5px
+  min-height 28px
+  max-height var(--max-height)
+  transition .1s height, .1s padding-left, .1s padding-right
+  background #ffffffb3
+ui-text
+  .ui-text-input
+    &:focus
+      background #fff
+    &:disabled
+      background #ffffffb3
+      color #0000005c
+.ui-text-scroll
+  position absolute
+  right 1.5px
+  top var(--ui-text-header-height)
+  height calc(100% - var(--ui-text-header-height) - 2px)
+.ui-text-border-shaping
+  position absolute
+  bottom 1.5px
+  left 0
+  height calc(100% - var(--ui-text-header-height))
+  width 100%
+  pointer-events none
+  overflow hidden
+.ui-text-border
+  width 100%
+  height calc(100% + 1.5px)
+  border-radius 5px
+  border 1.5px solid #0000000f
+.ui-text-indicator-shaping
+  position absolute
+  bottom 0
+  left 0
+  width 100%
+  height 12px
+  border-radius 5px
+  pointer-events none
+  overflow hidden
+.ui-text-indicator
+  position absolute
+  bottom 0
+  left 0
+  width 100%
+  height 1.5px
+  background #00000072
+ui-text
+  &:focus-within
+    .ui-text-indicator
+      height 2px
+      background var(--theme)
+  &[suggest-showed="bottom"]
+    .ui-text-input
+    .ui-text-border-shaping
+    .ui-text-indicator-shaping
+      border-bottom-left-radius 0
+      border-bottom-right-radius 0
+  &[suggest-showed="top"]
+    .ui-text-input
+    .ui-text-border-shaping
+    .ui-text-indicator-shaping
+      border-top-left-radius 0
+      border-top-right-radius 0
+.ui-text-suggest
+  position fixed
+  background #fffb
+  backdrop-filter $blur
+  outline 1.5px solid #000000ed
+  &[suggest-showed="bottom"]
+    border-radius 0 0 5px 5px
+    box-shadow 0 5px 5px #0004
+  &[suggest-showed="top"]
+    border-radius 5px 5px 0 0
+    box-shadow 0 -5px 5px #0004
+.ui-text-suggest-list
+  display flex
+  flex-direction column
+  padding 4px
+  max-height 40vh
+  overflow hidden scroll
+.ui-text-suggest-scroll
+  position absolute
+  top 0
+  right 0
+  height 100%
+.ui-text-suggest-item
+  position relative
+  padding 12px
+  border-radius 4px
+  animation ui-text-suggest-show .3s cubic-bezier(0, .5, 0, 1)
+  &:hover
+    background #0001
+  &:before
+    content ''
+    display block
+    position absolute
+    height 0%
+    top 50%
+    left 0
+    background var(--theme)
+    width 4px
+    border-radius 4px
+    opacity 0
+    transition .1s opacity, .1s top, .1s height
+.ui-text-suggest-item-selected
+  background #0002
+  &:before
+    height 50%
+    top 25%
+    opacity 1
+.ui-text-buttons
+  position absolute
+  top calc(var(--ui-text-header-height) + 1px)
+  display flex
+.ui-text-buttons-left
+  left 2.5px
+.ui-text-buttons-right
+  right 2.5px
+.ui-text-button
+  height 24px
+  width 24px
+  display flex
+  justify-content center
+  align-items center
+  border-radius 4px
+  transition .1s scale, .1s opacity, .1s width
+  &:hover
+    background #0002
+  &:active
+    scale .9
+// .ui-text-button-disabled
+.ui-text-button-hidden
+  opacity 0
+  pointer-events none
+  width 0px
+@media (prefers-color-scheme: dark)
+  ui-text
+    &[disabled]
+      .ui-text-header
+        color #ffffff66
+      .ui-text-indicator
+        background #ffffff12
+    &:hover
+      .ui-text-input
+        background #ffffff15
+    .ui-text-input
+      &:focus
+        background #1e1e1eb3
+      &:disabled
+        background #ffffff0b
+        color #ffffff5d
+  .ui-text-placeholder
+    color #ffffff5d
+  .ui-text-input
+    background #ffffff0f
+  .ui-text-border
+    border-color #ffffff12
+  .ui-text-indicator
+    background #ffffff8b
+  .ui-text-suggest
+    background #000b
+    outline-color #00000035
+  .ui-text-suggest-item
+    &:hover
+      background #ccc1
+  .ui-text-suggest-item-selected
+    background #fff2
+  .ui-text-button:hover
+    background #fff2
+
+.test
+  padding 128px
+  // background #000
+  position relative
