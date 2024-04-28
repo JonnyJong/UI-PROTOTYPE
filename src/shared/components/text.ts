@@ -487,6 +487,7 @@ export class UIText extends HTMLElement {
     this.#placeholder.textContent = value;
   }
   get value() {
+    if (typeof this.#prevValue === 'string') return this.#prevValue;
     return this.#inputBox.value;
   }
   set value(value) {
@@ -510,7 +511,7 @@ export class UIText extends HTMLElement {
     this.#prevSuggestValue = null;
     this.#suggest();
   }
-  get isSlectedSuggest() {
+  get isSelectingSuggest() {
     return (
       this.#currentSuggest.length > 0 &&
       this.hasAttribute('suggest-showed') &&
@@ -531,11 +532,11 @@ export class UIText extends HTMLElement {
     this.#rightButtons = buttonFilter(value);
     this.#redrawButtons('right');
   }
-  toggleButtonHidden(id: string, value?: boolean) {
-    this.#setBtnStatus(id, 'hidden', value);
+  toggleButtonHidden(id: string, force?: boolean) {
+    this.#setBtnStatus(id, 'hidden', force);
   }
-  toggleButtonDisabled(id: string, value?: boolean) {
-    this.#setBtnStatus(id, 'disabled', value);
+  toggleButtonDisabled(id: string, force?: boolean) {
+    this.#setBtnStatus(id, 'disabled', force);
   }
   // TODO：Input Verification
   //#region Static
