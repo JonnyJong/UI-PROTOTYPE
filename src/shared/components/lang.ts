@@ -11,14 +11,21 @@ export class UILang extends HTMLElement {
     }
     this.update();
   }
+  /**
+   * The key of the locale text.
+   */
   get key() {
     return this.#key;
   }
   set key(value) {
     this.#key = String(value);
+    this.update();
   }
+  /**
+   * Updating of translated text.
+   */
   update() {
-    this.textContent = locale(this.key as any);
+    this.textContent = this.#key === '' ? '' : locale(this.key as any);
   }
 }
 customElements.define('ui-lang', UILang);

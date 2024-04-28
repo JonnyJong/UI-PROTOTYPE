@@ -146,6 +146,9 @@ export class UIScroll extends HTMLElement {
     this.#target.removeEventListener('scroll', this.#observerHandler);
   }
   //#region Public
+  /**
+   * Whether the scrollbar is horizontal.
+   */
   get horizontal() {
     return this.#horizontal;
   }
@@ -154,6 +157,9 @@ export class UIScroll extends HTMLElement {
     this.#horizontal = !!value;
     this.#observerHandler();
   }
+  /**
+   * Elements associated with the scrollbar.
+   */
   get target() {
     return this.#target;
   }

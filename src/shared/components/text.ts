@@ -433,6 +433,9 @@ export class UIText extends HTMLElement {
     this.#setInputPadding();
   }
   //#region Public
+  /**
+   * Whether the text box is multi-line.
+   */
   get multiLine() {
     return this.#inputBox.tagName === 'TEXTAREA';
   }
@@ -440,6 +443,9 @@ export class UIText extends HTMLElement {
     if (value === this.multiLine) return;
     this.#initInputBox(value ? 'textarea' : 'input');
   }
+  /**
+   * Whether the text box is disabled.
+   */
   get disabled() {
     return this.#disabled;
   }
@@ -452,12 +458,19 @@ export class UIText extends HTMLElement {
     }
     this.removeAttribute('disabled');
   }
+  /**
+   * Sets or retrieves the value indicated
+   * whether the content of the object is read-only.
+   */
   get readonly() {
     return this.#inputBox.readOnly;
   }
   set readonly(value) {
     this.#inputBox.readOnly = value;
   }
+  /**
+   * The text box's header.
+   */
   get header(): string | HTMLElement[] {
     if (this.#header.children) {
       return [...this.#header.children] as HTMLElement[];
@@ -472,6 +485,12 @@ export class UIText extends HTMLElement {
     }
     this.#header.textContent = value;
   }
+  /**
+   * Gets or sets a text string that is displayed in an input field
+   * as a hint or prompt to users
+   * as the format or type of information they need to enter.
+   * The text appears in an input field until the user puts focus on the field.
+   */
   get placeholder(): string | HTMLElement[] {
     if (this.#placeholder.children) {
       return [...this.#placeholder.children] as HTMLElement[];
@@ -486,6 +505,11 @@ export class UIText extends HTMLElement {
     }
     this.#placeholder.textContent = value;
   }
+  /**
+   * Returns the value currently entered by the user,
+   * or the value previously entered by the user
+   * when the user is selecting a suggestion.
+   */
   get value() {
     if (typeof this.#prevValue === 'string') return this.#prevValue;
     return this.#inputBox.value;
@@ -498,6 +522,10 @@ export class UIText extends HTMLElement {
     );
     this.#prevValue = null;
   }
+  /**
+   * Auto Suggestions for Input Boxes invokes and generates auto suggestions
+   * or matches that are displayed near the input box when the user types.
+   */
   get autoSuggest() {
     if (typeof this.#autoSuggest === 'function') return this.#autoSuggest;
     return suggestFilter(this.#autoSuggest);
@@ -511,6 +539,9 @@ export class UIText extends HTMLElement {
     this.#prevSuggestValue = null;
     this.#suggest();
   }
+  /**
+   * Retrieve whether the user is selecting a suggest.
+   */
   get isSelectingSuggest() {
     return (
       this.#currentSuggest.length > 0 &&
@@ -518,6 +549,9 @@ export class UIText extends HTMLElement {
       !!this.#autoSuggestList.querySelector('.ui-text-suggest-item-selected')
     );
   }
+  /**
+   * Buttons on the left side of the input box.
+   */
   get leftButtons() {
     return buttonFilter(this.#leftButtons);
   }
@@ -525,6 +559,9 @@ export class UIText extends HTMLElement {
     this.#leftButtons = buttonFilter(value);
     this.#redrawButtons('left');
   }
+  /**
+   * Buttons on the right side of the input box.
+   */
   get rightButtons() {
     return buttonFilter(this.#rightButtons);
   }
@@ -532,14 +569,38 @@ export class UIText extends HTMLElement {
     this.#rightButtons = buttonFilter(value);
     this.#redrawButtons('right');
   }
+  /**
+   * Toggle button hidden or shown.
+   * @param id button's id
+   * @param force force hidden or shown
+   */
   toggleButtonHidden(id: string, force?: boolean) {
     this.#setBtnStatus(id, 'hidden', force);
   }
+  /**
+   * Toggle button enabled or disabled.
+   * @param id button's id
+   * @param force force enabled or disabled
+   */
   toggleButtonDisabled(id: string, force?: boolean) {
     this.#setBtnStatus(id, 'disabled', force);
   }
   // TODO：Input Verification
+  /* TODO: more types of text
+    - password
+    - number
+    - email
+    - tel
+    - url
+    - etc
+   */
   //#region Static
+  /**
+   * Generate a clear button for the input box.
+   * @param text input box object
+   * @param btnId button's id
+   * @returns button object and event listener
+   */
   static generateClearButton(
     text: UIText,
     btnId = 'clear'
