@@ -1,4 +1,5 @@
-type ComponentNameMap = 'lang';
+type ComponentNameMap = 'lang' | 'scroll' | 'text';
+const ComponentNames: ComponentNameMap[] = ['lang', 'scroll', 'text'];
 
 export function initComponents(...componentNames: ComponentNameMap[]) {
   for (const name of componentNames) {
@@ -9,4 +10,8 @@ export function initComponents(...componentNames: ComponentNameMap[]) {
       console.error('Failed to load component:', name);
     }
   }
+}
+
+export function initAllComponents() {
+  initComponents(...ComponentNames);
 }

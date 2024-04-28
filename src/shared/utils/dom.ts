@@ -4,6 +4,9 @@ This module only work on renderer process!
 
 import path from 'path';
 import { render, renderFile } from 'pug';
+import type { UILang } from 'shared/components/lang';
+import type { UIText } from 'shared/components/text';
+import type { UIScroll } from 'shared/components/scroll';
 
 function getRendererCwd() {
   let mod = module;
@@ -14,6 +17,9 @@ const layoutRoot = path.join(getRendererCwd(), 'views');
 const sharedLayoutRoot = path.join(__dirname, 'views');
 
 interface DOMTagNameMap extends HTMLElementTagNameMap {
+  'ui-lang': UILang;
+  'ui-text': UIText;
+  'ui-scroll': UIScroll;
   // Add custom elements here
 }
 
@@ -163,7 +169,12 @@ export class Dom<T extends HTMLElement = HTMLElement> {
     pack: boolean = false
   ): DOMTagNameMap[K] | Dom<DOMTagNameMap[K]> {
     let dom = document.createElement(tagName);
+    /* HACK: Adding items to the DOMTagNameMap
+    causes the following two lines to report errors
+    */
+    // @ts-ignore
     if (!pack) return dom;
+    // @ts-ignore
     return new Dom<DOMTagNameMap[K]>(dom);
   }
   filter(callback: (value: T, index: number, array: T[]) => boolean) {
