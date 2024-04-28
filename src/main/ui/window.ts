@@ -191,11 +191,6 @@ export function initMainWindow(): BrowserWindow {
     mainWindow.setBackgroundColor(getWindowBgColor());
   });
 
-  // Dev
-  if (!app.isPackaged) {
-    mainWindow.webContents.openDevTools();
-  }
-
   return mainWindow;
 }
 

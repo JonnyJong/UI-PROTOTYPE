@@ -3,6 +3,7 @@ import { settings } from './modules/settings';
 import { loadLocales } from './ui/locale';
 import { initMainWindow } from './ui/window';
 import { initEvents } from './ui/event';
+import { initDevFunctions } from './utils/dev';
 
 app.on('ready', async () => {
   Menu.setApplicationMenu(null);
@@ -14,6 +15,9 @@ app.on('ready', async () => {
   initEvents();
 
   const mainWindow = initMainWindow();
+
+  // XXX: Dev functions, remove before release
+  initDevFunctions(mainWindow.webContents, 'main');
 });
 
 if (process.platform !== 'darwin') {

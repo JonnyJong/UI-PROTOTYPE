@@ -1,4 +1,4 @@
-import { ipcMain, screen } from 'electron';
+import { app, ipcMain, screen } from 'electron';
 import { getWallpaperPath } from 'main/modules/wallpaper';
 import { getLocaleDict } from './locale';
 
@@ -26,4 +26,6 @@ export function initEvents() {
   ipcMain.handle('os:getWallpaperPath', () => {
     return getWallpaperPath();
   });
+  // XXX: Dev functions, remove before release
+  ipcMain.handle('dev', () => !app.isPackaged);
 }
