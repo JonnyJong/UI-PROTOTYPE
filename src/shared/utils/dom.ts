@@ -76,6 +76,33 @@ export class Dom<T extends HTMLElement = HTMLElement> {
   #doms: T[] = [];
   #class: Class<T>;
   #attr: Attribute<T>;
+  #dataset = new Proxy<{ [x: string]: string | undefined }>(
+    {},
+    {
+      has: (_, p) => {
+        if (typeof p !== 'string') return false;
+        return this.#doms.every((e) => typeof e.dataset[p] === 'string');
+      },
+      get: (_, p) => {
+        if (typeof p !== 'string') return;
+        return this.#doms[0]?.dataset[p];
+      },
+      set: (_, p, value) => {
+        if (typeof p !== 'string') return false;
+        for (const dom of this.#doms) {
+          dom.dataset[p] = value;
+        }
+        return true;
+      },
+      deleteProperty: (_, p) => {
+        if (typeof p !== 'string') return false;
+        for (const dom of this.#doms) {
+          delete dom.dataset[p];
+        }
+        return true;
+      },
+    }
+  );
   //#region Create Method
   constructor(...args: (string | T | Dom<T>)[]) {
     this.#class = new Class(this);
@@ -186,6 +213,17 @@ export class Dom<T extends HTMLElement = HTMLElement> {
     }
     return this.#doms[0].getBoundingClientRect();
   }
+  get id(): string | undefined {
+    return this.#doms[0]?.id;
+  }
+  set id(value: string) {
+    for (const dom of this.#doms) {
+      dom.id = value;
+    }
+  }
+  get data() {
+    return this.#dataset;
+  }
   //#region Other
   [Symbol.iterator]() {
     return this.#doms[Symbol.iterator]();
@@ -240,6 +278,34 @@ export class Dom<T extends HTMLElement = HTMLElement> {
     }
     for (const dom of this.#doms) {
       dom.after(...doms.map((e) => e.cloneNode(true) as HTMLElement));
+    }
+  }
+  on<K extends keyof HTMLElementEventMap>(
+    type: K,
+    listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any,
+    options?: boolean | AddEventListenerOptions
+  ): void;
+  on(
+    type: string,
+    listener: EventListenerOrEventListenerObject,
+    options?: boolean | AddEventListenerOptions
+  ) {
+    for (const dom of this.#doms) {
+      dom.addEventListener(type, listener, options);
+    }
+  }
+  off<K extends keyof HTMLElementEventMap>(
+    type: K,
+    listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any,
+    options?: boolean | AddEventListenerOptions
+  ): void;
+  off(
+    type: string,
+    listener: EventListenerOrEventListenerObject,
+    options?: boolean | AddEventListenerOptions
+  ) {
+    for (const dom of this.#doms) {
+      dom.removeEventListener(type, listener, options);
     }
   }
 }
