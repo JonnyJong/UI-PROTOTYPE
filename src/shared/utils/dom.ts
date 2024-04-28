@@ -7,6 +7,7 @@ import { render, renderFile } from 'pug';
 import type { UILang } from 'shared/components/lang';
 import type { UIText } from 'shared/components/text';
 import type { UIScroll } from 'shared/components/scroll';
+import { CSSTokens } from 'shared/types/dom';
 
 function getRendererCwd() {
   let mod = module;
@@ -109,6 +110,35 @@ export class Dom<T extends HTMLElement = HTMLElement> {
       },
     }
   );
+  #style = new Proxy<CSSTokens>({} as CSSTokens, {
+    get: (_, p) => {
+      if (typeof p !== 'string') return false;
+      if (p.startsWith('--')) return this.#doms[0]?.style.getPropertyValue(p);
+      return this.#doms[0]?.style[p as any];
+    },
+    set: (_, p, value) => {
+      if (typeof p !== 'string') return false;
+      for (const dom of this.#doms) {
+        if (p.startsWith('--')) {
+          dom.style.setProperty(p, value);
+          continue;
+        }
+        dom.style[p as any] = value;
+      }
+      return true;
+    },
+    deleteProperty: (_, p) => {
+      if (typeof p !== 'string') return false;
+      for (const dom of this.#doms) {
+        if (p.startsWith('--')) {
+          dom.style.removeProperty(p);
+          continue;
+        }
+        dom.style[p as any] = '';
+      }
+      return true;
+    },
+  });
   //#region Create Method
   constructor(...args: (string | T | Dom<T>)[]) {
     this.#class = new Class(this);
@@ -237,6 +267,9 @@ export class Dom<T extends HTMLElement = HTMLElement> {
   }
   get data() {
     return this.#dataset;
+  }
+  get style() {
+    return this.#style;
   }
   //#region Other
   [Symbol.iterator]() {
