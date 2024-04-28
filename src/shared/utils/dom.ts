@@ -190,6 +190,9 @@ export class Dom<T extends HTMLElement = HTMLElement> {
   map(callback: (value: T, index: number, array: T[]) => T) {
     return new Dom<T>(...this.#doms.map(callback));
   }
+  clone(deep?: boolean): Dom<T> {
+    return new Dom(...this.#doms.map((e) => e.cloneNode(deep) as T));
+  }
   get children() {
     let children = [];
     for (const dom of this.#doms) {
