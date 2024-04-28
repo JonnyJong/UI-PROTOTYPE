@@ -43,11 +43,7 @@ function suggestFilter(
     })
     .map((v) => {
       if (typeof v === 'string') return v;
-      return {
-        label: v.label,
-        text: v.text,
-        action: v.action,
-      };
+      return { ...v };
     });
 }
 
@@ -100,14 +96,7 @@ function buttonFilter(value: UITextButton[]): UITextButton[] {
       return typeof v.icon === 'string' && typeof v.action === 'function';
     })
     .map((v) => {
-      return {
-        icon: v.icon,
-        tooltip: v.tooltip,
-        action: v.action,
-        id: v.id,
-        disabled: v.disabled,
-        hidden: v.hidden,
-      };
+      return { ...v };
     });
 }
 
