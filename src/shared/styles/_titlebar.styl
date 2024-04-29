@@ -1,0 +1,125 @@
+$winCtrlBtnWidth = config('ui', 'windowControlButtonWidth') * 1px
+$winCtrlBtnHeight = config('ui', 'windowControlButtonHeight') * 1px
+$avatarSize = config('ui', 'titlebarAvatarSize') * 1px
+
+.window-controls
+  display flex
+  position fixed
+  top 0
+  right 0
+  font-size 10px
+  z-index 100
+.window-control
+  display flex
+  justify-content center
+  align-items center
+  width $winCtrlBtnWidth
+  height $winCtrlBtnHeight
+  transition .1s width
+  .icon
+    transition .1s font-size
+  &:hover
+    background var(--color-tsp2)
+    &:active
+      background var(--color-tsp1)
+.window-control-close
+  &:hover
+    background #d00
+    color #fff
+    &:active
+      background #d008
+.window-control-icon-maximize
+body.maximized .window-control-icon-restore
+  display block
+body.maximized .window-control-icon-maximize
+.window-control-icon-restore
+  display none
+.window-control-hidden
+  pointer-events none
+  width 0px
+  .icon
+    font-size 0px
+.window-control-disabled
+  pointer-events none
+  opacity .5
+
+.titlebar
+  display flex
+  align-items center
+  position fixed
+  top 0
+  left 0
+  right 0
+  width 100vw
+  height 48px
+  z-index 90
+  font-size 12px
+  app-region drag
+  &:after
+    content ''
+    display block
+    width var(--window-control-width, $winCtrlBtnWidth * 3)
+    height $winCtrlBtnHeight
+    margin-bottom 48px - $winCtrlBtnHeight
+    max-height 100%
+    app-region no-drag
+    transition .1s width
+.app-icon
+  height 20px
+  width 20px
+  margin 8px
+.app-state
+  padding-top 4px
+  font-size 10px
+  height 14px
+  overflow hidden
+  transition .1s padding-top, .1s height
+  &:empty
+    padding-top 0px
+    height 0px
+.titlebar-flex
+  flex 1
+  // XXX: Animation when showing and hiding title bar buttons
+  transition .1s padding
+  ui-text
+    margin auto
+    max-width 512px
+    app-region no-drag
+.titlebar-buttons
+  display flex
+  font-size 12px
+  &>*
+    @extend .window-control
+#titlebar-buttons
+  padding-left 6px
+.titlebar-button
+  width 36px
+  height 36px
+  border-radius 5px
+  app-region no-drag
+  transition .1s width
+  &:active
+    .icon
+      opacity .75
+.titlebar-button-hidden
+  pointer-events none
+  width 0px
+  .icon
+    font-size 0px
+.titlebar-button-disabled
+  pointer-events none
+  opacity .5
+.titlebar-avatar
+  &:not(:empty)
+    padding 0 24px
+  img
+    height $avatarSize
+    width $avatarSize
+    border-radius 100%
+    transition .1s scale
+    object-fit cover
+    app-region no-drag
+    &:hover
+      scale .9
+    &:active
+      scale .8

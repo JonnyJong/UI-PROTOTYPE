@@ -1,4 +1,7 @@
 {
+  "windowControlButtonHeight": 30,
+  "windowControlButtonWidth": 45,
+  "titlebarAvatarSize": 28,
   "micaAlt": false,
   "safetyZone": [30, 0, 0, 0]
 }
