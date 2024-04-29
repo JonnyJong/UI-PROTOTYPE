@@ -103,7 +103,7 @@ function buttonFilter(value: UITextButton[]): UITextButton[] {
 export class UIText extends HTMLElement {
   #inited = false;
   #id = unid();
-  #disabled: boolean;
+  #disabled: boolean = false;
   #header = $.pug<HTMLLabelElement>('label.ui-text-header').at(0);
   #placeholder = $.pug<HTMLDivElement>('.ui-text-placeholder').at(0);
   #inputBox: HTMLInputElement | HTMLTextAreaElement = null as any;
@@ -124,8 +124,10 @@ export class UIText extends HTMLElement {
   #rightButtonsContainer = $.pug<HTMLDivElement>(
     '.ui-text-buttons.ui-text-buttons-right'
   ).at(0);
-  constructor() {
-    super();
+  //#region Private
+  connectedCallback() {
+    if (this.#inited) return;
+    this.#inited = true;
     this.#disabled = this.hasAttribute('disabled');
     this.#header.innerHTML = this.getAttribute('header') ?? '';
     this.#header.htmlFor = 'ui-text-' + this.#id;
@@ -151,11 +153,6 @@ export class UIText extends HTMLElement {
     this.#autoSuggestBox.addEventListener('pointerdown', (ev) => {
       ev.preventDefault();
     });
-  }
-  //#region Private
-  connectedCallback() {
-    if (this.#inited) return;
-    this.#inited = true;
     this.append(
       this.#header,
       this.#inputBox,

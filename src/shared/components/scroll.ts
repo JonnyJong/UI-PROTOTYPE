@@ -20,12 +20,14 @@ export class UIScroll extends HTMLElement {
   #targetScrollSize = 0;
   #dragStart = 0;
   #dragLength = 0;
-  constructor() {
-    super();
+  //#region Private
+  connectedCallback() {
+    if (this.#inited) return;
+    this.#inited = true;
     // Basic
     this.#horizontal = this.hasAttribute('horizontal');
     let target = this.getAttribute('target');
-    if (target) this.target = document.querySelector(target);
+    if (target && !this.#target) this.target = document.querySelector(target);
     this.#resizeObserver.observe(this);
     // Event
     this.#btnUp.addEventListener('click', () => {
@@ -71,11 +73,6 @@ export class UIScroll extends HTMLElement {
         behavior: 'smooth',
       });
     });
-  }
-  //#region Private
-  connectedCallback() {
-    if (this.#inited) return;
-    this.#inited = true;
     this.append(this.#track, this.#thumb, this.#btnUp, this.#btnDown);
   }
   #dragHandler = (e: PointerEvent) => {
