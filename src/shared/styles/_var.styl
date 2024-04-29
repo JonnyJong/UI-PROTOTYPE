@@ -1,0 +1,46 @@
+$theme = $bgDark = convert(config('default', 'color'))
+
+$bgLight = convert(config('default', 'windowBackground.light'))
+$bgDark = convert(config('default', 'windowBackground.dark'))
+
+$blur = blur(20px) saturate(5)
+
+:root
+  --bg $bgLigh
+  --color #000
+  --color-tsp1 #0001
+  --color-tsp2 #0002
+  --color-tsp3 #0003
+  --color-tsp4 #0004
+  --color-tsp5 #0005
+  --color-tsp6 #0006
+  --color-tsp7 #0007
+  --color-tsp8 #0008
+  --color-tsp9 #0009
+  --color-tsp10 #000a
+  --color-tsp11 #000b
+  --color-tsp12 #000c
+  --color-tsp13 #000d
+  --color-tsp14 #000e
+
+  --theme $theme
+  --theme-5 alpha($theme, 0.5)
+  --theme-1 alpha($theme, 0.1)
+  --theme-color dark($theme) ? #fff : #ddd
+  @media (prefers-color-scheme: dark)
+    --bg $bgDark
+    --color #ddd
+    --color-tsp1 #ddd1
+    --color-tsp2 #ddd2
+    --color-tsp3 #ddd3
+    --color-tsp4 #ddd4
+    --color-tsp5 #ddd5
+    --color-tsp6 #ddd6
+    --color-tsp7 #ddd7
+    --color-tsp8 #ddd8
+    --color-tsp9 #ddd9
+    --color-tsp10 #ddda
+    --color-tsp11 #dddb
+    --color-tsp12 #dddc
+    --color-tsp13 #dddd
+    --color-tsp14 #ddde
