@@ -14,6 +14,7 @@ A clean, fully keyboard-enabled, feature-rich UI prototype designed specifically
 一个简洁的、完整键盘支持、功能丰富的专为 Electron 设计的 UI 原型 。
 
 ## Quick start / 快速开始
+
 ```sh
 npm install
 npm run compile
@@ -21,4 +22,11 @@ npm start
 ```
 
 ## Document / 文档
+
 https://ui-prototype.jonnys.top
+
+## Progress / 进度
+
+- [ ] UI Components / UI 组件
+- [ ] Plugin System / 插件系统
+- [ ] Keyboard Support / 键盘支持
