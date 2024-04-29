@@ -153,7 +153,7 @@ export class Dom<T extends HTMLElement = HTMLElement> {
         continue;
       }
       if (arg instanceof Dom) {
-        this.#doms.push(...arg.#doms);
+        this.#doms.push(...arg.map((e) => e));
         continue;
       }
     }
@@ -185,6 +185,26 @@ export class Dom<T extends HTMLElement = HTMLElement> {
         option
       )
     );
+  }
+  static from<T extends HTMLElement = HTMLElement>(
+    ...args: (string | T | Dom<T>)[]
+  ) {
+    let doms: (HTMLElement | Dom)[] = [];
+    for (const arg of args) {
+      if (typeof arg === 'string') {
+        doms.push(...Dom.html<T>(arg));
+        continue;
+      }
+      if (arg instanceof HTMLElement) {
+        doms.push(arg);
+        continue;
+      }
+      if (arg instanceof Dom) {
+        doms.push(...arg.#doms);
+        continue;
+      }
+    }
+    return new Dom(...doms);
   }
   static new<K extends keyof DOMTagNameMap>(
     tagName: K,
@@ -288,9 +308,9 @@ export class Dom<T extends HTMLElement = HTMLElement> {
     return this.#doms.some(callback);
   }
   before(...args: (Dom | HTMLElement | string)[]) {
-    let doms = new Dom(...args);
+    let doms = Dom.from(...args);
     if (this.length === 1) {
-      this.#doms[0].before(...doms);
+      this.#doms[0].before(...doms.map((e) => e));
       return;
     }
     for (const dom of this.#doms) {
@@ -298,9 +318,9 @@ export class Dom<T extends HTMLElement = HTMLElement> {
     }
   }
   prepend(...args: (Dom | HTMLElement | string)[]) {
-    let doms = new Dom(...args);
+    let doms = Dom.from(...args);
     if (this.length === 1) {
-      this.#doms[0].prepend(...doms);
+      this.#doms[0].prepend(...doms.map((e) => e));
       return;
     }
     for (const dom of this.#doms) {
@@ -308,9 +328,9 @@ export class Dom<T extends HTMLElement = HTMLElement> {
     }
   }
   append(...args: (Dom | HTMLElement | string)[]) {
-    let doms = new Dom(...args);
+    let doms = Dom.from(...args);
     if (this.length === 1) {
-      this.#doms[0].append(...doms);
+      this.#doms[0].append(...doms.map((e) => e));
       return;
     }
     for (const dom of this.#doms) {
@@ -318,9 +338,9 @@ export class Dom<T extends HTMLElement = HTMLElement> {
     }
   }
   after(...args: (Dom | HTMLElement | string)[]) {
-    let doms = new Dom(...args);
+    let doms = Dom.from(...args);
     if (this.length === 1) {
-      this.#doms[0].after(...doms);
+      this.#doms[0].after(...doms.map((e) => e));
       return;
     }
     for (const dom of this.#doms) {
