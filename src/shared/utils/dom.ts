@@ -291,6 +291,9 @@ export class Dom<T extends HTMLElement = HTMLElement> {
   get style() {
     return this.#style;
   }
+  get doms() {
+    return [...this.#doms];
+  }
   //#region Other
   [Symbol.iterator]() {
     return this.#doms[Symbol.iterator]();
@@ -373,6 +376,34 @@ export class Dom<T extends HTMLElement = HTMLElement> {
   ) {
     for (const dom of this.#doms) {
       dom.removeEventListener(type, listener, options);
+    }
+  }
+  push(...doms: (T | Dom<T>)[]) {
+    for (const dom of doms) {
+      if (dom instanceof Dom) {
+        this.#doms.push(...dom.doms);
+        continue;
+      }
+      if (dom instanceof HTMLElement) {
+        this.#doms.push(dom);
+        continue;
+      }
+    }
+  }
+  remove(...doms: (T | Dom<T> | number)[]) {
+    for (const dom of doms) {
+      if (dom instanceof Dom) {
+        this.#doms = this.#doms.filter((e) => !dom.doms.includes(e));
+        continue;
+      }
+      if (dom instanceof HTMLElement) {
+        this.#doms = this.#doms.filter((e) => e !== dom);
+        continue;
+      }
+      if (typeof dom === 'number') {
+        this.#doms.splice(dom, 1);
+        continue;
+      }
     }
   }
 }

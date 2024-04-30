@@ -83,7 +83,7 @@ function createSuggestItem(
     } else if (suggest.label instanceof HTMLElement) {
       suggestItem.append(suggest.label);
     } else {
-      suggestItem.append(...suggest.label.map((e) => e));
+      suggestItem.append(...suggest.label.doms);
     }
   }
   suggestItem.addEventListener('click', () => acceptSuggest(index));
