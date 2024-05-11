@@ -54,10 +54,7 @@ ipcRenderer.send('_scope_:event_name');
   ```
 - 在主线程中使用如下方式启动该窗口：
   ```typescript
-  let newWindow = initWindow({
-    root: '<win_id>'
-    autoShow: true
-  });
+  let newWindow = new Window('<win_id>');
   ```
 
 关于样式文件，请查阅[样式](../style)章节。  
@@ -65,14 +62,6 @@ ipcRenderer.send('_scope_:event_name');
 
 # API
 ## `main/ui/window`
-
-### initWindow
-```typescript
-initWindow(options: WindowInitOptions): BrowserWindow;
-```
-初始化窗口。
-
-`options.root`参数以`src/renderer`为起点。
 
 ### initMainWindow
 ```typescript

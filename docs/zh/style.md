@@ -14,6 +14,12 @@ UI-PROTOTYPE 使用 Stylus 来编写 css。
 ## 编写通用的样式文件
 UI-PROTOTYPE 默认将通用的样式文件存放在`src/shared/styles`，其规则与窗口的样式文件相同。
 
+以下是 UI-PROTOTYPE 内置的样式文件：
+
+| 文件名           | 说明   |
+| ---------------- | ------ |
+| `_titlebar.styl` | 标题栏 |
+
 # API
 ## config
 *该函数仅限 Stylus 模板中使用。*
