@@ -151,6 +151,7 @@ function createCanvas(
 }
 
 export async function initMica() {
+  // BUG: Displaying exceptions on multiple screens
   // Get Sample Data
   let wallpaperPath = await ipcRenderer.invoke('os:getWallpaperPath');
   if (!wallpaperPath) return;
