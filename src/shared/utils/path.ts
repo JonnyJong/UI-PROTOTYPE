@@ -38,3 +38,10 @@ function parsePath(...paths: string[]): string {
 export function distPath(...path: string[]): string {
   return parsePath(__dirname, '../..', ...path);
 }
+
+export function pathNormalize(...path: string[]): string {
+  return path
+    .join('/')
+    .replace(/[\\\/\:\*\?\"\r\n\,\| ]/g, '-')
+    .replace(/\-{2,}/g, '-');
+}
