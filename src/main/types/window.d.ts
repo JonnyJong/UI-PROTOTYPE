@@ -1,15 +1,8 @@
-import { BrowserWindow, BrowserWindowConstructorOptions } from 'electron';
-
-export type WindowInitOptions = {
-  construct?: BrowserWindowConstructorOptions;
-  root: string;
-  autoShow?: boolean;
-  controls?: {
-    close: 'close' | 'hide' | 'none';
-    resize: boolean;
-    minimize: boolean;
-  };
-};
+import {
+  BrowserWindow,
+  BrowserWindowConstructorOptions,
+  IpcMainInvokeEvent,
+} from 'electron';
 
 export type WindowStateTemplate = [
   maximized: boolean,
@@ -20,35 +13,37 @@ export type WindowStateTemplate = [
 ];
 
 export type WindowIpcEventHandler = (
-  window: BrowserWindow,
+  window: IWindow,
   event: string,
   ...args: any[]
 ) => any;
 
 export class IWindowState {
-  constructor(window: BrowserWindow, id: string);
+  constructor(window: IWindow, id: string);
   save(): Promise<void>;
   show(): Promise<void>;
 }
 
-export interface IWindowControls {
+export class IWindowControls {
   close: 'close' | 'hide' | 'none';
   resize: boolean;
   minimize: boolean;
 }
 
-export type WindowConstructorOptions = {
+export interface WindowControlsConstructorOptions {
+  close?: 'close' | 'hide' | 'none';
+  resize?: boolean;
+  minimize?: boolean;
+}
+export interface WindowConstructorOptions
+  extends BrowserWindowConstructorOptions {
   autoShow?: boolean;
-  controls?: {
-    close?: 'close' | 'hide' | 'none';
-    resize?: boolean;
-    minimize?: boolean;
-  };
-} & BrowserWindowConstructorOptions;
+  controls?: WindowControlsConstructorOptions;
+}
 
-export class IWindow {
+export declare class IWindow extends BrowserWindow {
   constructor(root: string, options?: WindowConstructorOptions);
-  window: BrowserWindow;
   controls: IWindowControls;
   state: IWindowState;
+  static getWindowByEvent(event: IpcMainInvokeEvent): IWindow | null;
 }

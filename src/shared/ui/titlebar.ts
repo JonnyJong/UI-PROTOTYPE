@@ -83,7 +83,7 @@ class Titlebar implements ITitlebar {
     this.#flexElement.style.padding = `0 ${left}px 0 ${right}px`;
     this.#titlebarElement.style['--window-control-width'] = winCtrlWidth + 'px';
   }
-  init() {
+  async init() {
     // Initialize variables
     this.#titlebarElement = $('#titlebar');
     this.#buttonsElement = $('#titlebar-buttons');
@@ -96,6 +96,10 @@ class Titlebar implements ITitlebar {
     this.#windowControlResizeElement = $('#window-resize');
     this.#windowControlCloseElement = $('#window-close');
     this.#windowControlsContainerElement = $('#window-controls-container');
+    let controls = await ipcRenderer.invoke('win:controls');
+    this.windowControlClose = controls.close;
+    this.windowControlMinimize = controls.minimize;
+    this.windowControlResize = controls.resize;
     this.#resize();
     // Setup events
     this.#windowControlMinimizeElement.on('click', () => {
@@ -109,6 +113,12 @@ class Titlebar implements ITitlebar {
     this.#windowControlCloseElement.on('click', () => {
       if (this.#windowControlClose === 'none') return;
       ipcRenderer.send('win:' + this.#windowControlClose);
+    });
+    ipcRenderer.on('win:controls', (_, controls) => {
+      this.windowControlClose = controls.close;
+      this.windowControlMinimize = controls.minimize;
+      this.windowControlResize = controls.resize;
+      this.#resize();
     });
   }
   get state(): string | HTMLElement | Dom {

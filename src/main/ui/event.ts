@@ -1,6 +1,7 @@
 import { app, ipcMain, screen } from 'electron';
 import { getWallpaperPath } from 'main/modules/wallpaper';
 import { getLocaleDict } from './locale';
+import { Window } from './window';
 
 export function initEvents() {
   // Locale
@@ -9,8 +10,13 @@ export function initEvents() {
   });
   // Window
   ipcMain.handle('win:controls', (event) => {
-    // TODO: 处理获取窗口控制按钮的事件
-    event.sender;
+    let window = Window.getWindowByEvent(event);
+    if (!window) return;
+    return {
+      close: window.controls.close,
+      minimize: window.controls.minimize,
+      resize: window.controls.resize,
+    };
   });
   // OS
   ipcMain.handle('os:getScreenSize', () => {
