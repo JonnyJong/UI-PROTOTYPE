@@ -2,6 +2,7 @@ import { app, ipcMain, screen } from 'electron';
 import { getWallpaperPath } from 'main/modules/wallpaper';
 import { getLocaleDict } from './locale';
 import { Window } from './window';
+import path from 'path';
 
 export function initEvents() {
   // Locale
@@ -17,6 +18,11 @@ export function initEvents() {
       minimize: window.controls.minimize,
       resize: window.controls.resize,
     };
+  });
+  ipcMain.handle('win:root', (event) => {
+    let window = Window.getWindowByEvent(event);
+    if (!window) return;
+    return path.join(__dirname, '../../renderer', window.root);
   });
   // OS
   ipcMain.handle('os:getScreenSize', () => {

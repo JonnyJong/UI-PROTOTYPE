@@ -45,5 +45,6 @@ export declare class IWindow extends BrowserWindow {
   constructor(root: string, options?: WindowConstructorOptions);
   controls: IWindowControls;
   state: IWindowState;
+  readonly root: string;
   static getWindowByEvent(event: IpcMainInvokeEvent): IWindow | null;
 }

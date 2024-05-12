@@ -209,11 +209,13 @@ class WindowControls implements IWindowControls {
 }
 
 export class Window extends BrowserWindow implements IWindow {
+  #root: string;
   controls: IWindowControls;
   state: IWindowState;
   constructor(root: string, options?: WindowConstructorOptions) {
     options = prepareWindowOptions(root, options);
     super(options);
+    this.#root = root;
     Window.windows.add(this);
     this.controls = new WindowControls(this, options.controls);
     this.state = new WindowState(this, root);
@@ -235,6 +237,9 @@ export class Window extends BrowserWindow implements IWindow {
       if (window.webContents === webContents) return window;
     }
     return null;
+  }
+  get root() {
+    return this.#root;
   }
 }
 

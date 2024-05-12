@@ -13,6 +13,9 @@ UI-PROTOTYPE 在 `src/main/ui/event.ts` 中统一管理全局的异步事件。
 ### win:controls
 提供渲染线程中标题栏初始化窗口控件参数。
 
+### win:root
+获取窗口根路径
+
 ### os:getScreenSize
 提供渲染线程中获取屏幕尺寸参数。
 
