@@ -3,5 +3,6 @@
   "windowControlButtonWidth": 45,
   "titlebarAvatarSize": 28,
   "micaAlt": false,
-  "safetyZone": [30, 0, 0, 0]
+  "safetyZone": [30, 0, 0, 0],
+  "defaultPageSwitchAnimation": "entrance"
 }

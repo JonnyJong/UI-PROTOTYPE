@@ -1,0 +1,94 @@
+// entrance
+@keyframes page-swich-entrance-a
+  0%
+    opacity 1
+  100%
+    opacity .75
+@keyframes page-swich-entrance-b-bottom
+  0%
+    top 100px
+  100%
+    top 0px
+@keyframes page-swich-entrance-b-top
+  0%
+    top -100px
+  100%
+    top 0px
+@keyframes page-swich-entrance-b-right
+  0%
+    left 100px
+  100%
+    left 0px
+@keyframes page-swich-entrance-b-left
+  0%
+    left -100px
+  100%
+    left 0px
+// slide
+@keyframes page-switch-slide-a-right
+  0%
+    left 0px
+  100%
+    left -100px
+@keyframes page-switch-slide-a-left
+  0%
+    left 0px
+  100%
+    left 100px
+@keyframes page-switch-slide-a-bottom
+  0%
+    top 0px
+  100%
+    top -100px
+@keyframes page-switch-slide-a-top
+  0%
+    top 0px
+  100%
+    top 100px
+@keyframes page-switch-slide-b-right
+  0%
+    left 100px
+  100%
+    left 0px
+@keyframes page-switch-slide-b-left
+  0%
+    left -100px
+  100%
+    left 0px
+@keyframes page-switch-slide-b-bottom
+  0%
+    top 100px
+  100%
+    top 0px
+@keyframes page-switch-slide-b-top
+  0%
+    top -100px
+  100%
+    top 0px
+// drill
+@keyframes page-switch-drill-in
+  0%
+    scale 1
+    opacity 1
+  100%
+    scale var(--page-switch-drill-scale-1)
+    opacity 0
+@keyframes page-switch-drill-out
+  0%
+    scale 1
+    opacity 1
+  100%
+    scale var(--page-switch-drill-scale-2)
+    opacity 0
+
+.pages-container
+  position relative
+  width 100vw
+  height 100vh
+.page
+  position absolute
+  width 100vw
+  height 100vh
+  display flex
+  justify-content center
+  align-items center

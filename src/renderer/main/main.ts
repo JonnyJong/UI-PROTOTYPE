@@ -2,9 +2,11 @@ import { ipcRenderer } from 'electron';
 import { initMica } from 'shared/ui/background';
 import { initAllComponents } from 'shared/ui/components';
 import { loadLocales } from 'shared/ui/locale';
+import { pages } from 'shared/ui/pages';
 import { titlebar } from 'shared/ui/titlebar';
 import { initWindowEvents } from 'shared/ui/window';
 import { $ } from 'shared/utils/dom';
+import { PageHome } from './pages/home';
 
 document.addEventListener('DOMContentLoaded', async () => {
   initWindowEvents();
@@ -12,6 +14,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   await loadLocales();
   initAllComponents();
   titlebar.init();
+  pages.define('home', PageHome);
+  pages.init();
+  (window as any).pages = pages;
 });
 
 // XXX: Dev functions, remove before release
