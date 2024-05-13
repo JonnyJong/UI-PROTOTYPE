@@ -101,3 +101,9 @@ export function setPosition(
   }
   return side;
 }
+
+export function getScaleFactor(w: number, h: number, increment: number) {
+  let avg = (w + h) / 2;
+  if (avg + increment < 0) return 0;
+  return (avg + increment) / avg;
+}
