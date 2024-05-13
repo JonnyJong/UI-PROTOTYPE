@@ -3,3 +3,9 @@ export function sleep(ms: number = 0) {
     setTimeout(resolve, ms);
   });
 }
+
+export function frame() {
+  return new Promise((resolve) => {
+    requestAnimationFrame(resolve);
+  });
+}
