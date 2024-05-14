@@ -1,3 +1,62 @@
+import { UILang } from 'shared/components/lang';
+import { UIScroll } from 'shared/components/scroll';
+import { UIText } from 'shared/components/text';
+
+export interface DOMTagNameMap extends HTMLElementTagNameMap {
+  'ui-lang': UILang;
+  'ui-text': UIText;
+  'ui-scroll': UIScroll;
+  // XXX: Add custom elements here
+}
+
+/**
+ * Provides methods for manipulating elements class names
+ */
+export interface IDomClass<T extends HTMLElement> {
+  /**
+   * Add class names to all elements
+   */
+  add(...args: string[]): void;
+  /**
+   * Check that all elements contain class names
+   */
+  contains(name: string): boolean;
+  /**
+   * Remove multiple class names from all elements
+   */
+  remove(...args: string[]): void;
+  /**
+   * Replace class names from all elements
+   */
+  replace(name: string, newName: string): void;
+  /**
+   * Toggle class names for all elements
+   */
+  toggle(name: string, force?: boolean): void;
+  /**
+   * Set class name text directly for all elements
+   */
+  setClassText(text: string): void;
+}
+
+/**
+ * Provides methods to manipulate elements attributes
+ */
+export interface IDomAttribute<T extends HTMLElement> {
+  /**
+   * Getting the attributes of the first element
+   */
+  get(name: string): (string | null)[];
+  /**
+   * Setting attributes for all elements
+   */
+  set(name: string, value: string): void;
+  /**
+   * Remove attributes from all elements
+   */
+  remove(name: string): void;
+}
+
 export interface CSSTokens {
   /** [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/accent-color) */
   accentColor: string;

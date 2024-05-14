@@ -71,7 +71,7 @@ class Titlebar implements ITitlebar {
       if (btn.hidden) continue;
       winCtrlWidth += windowControlButtonWidth;
     }
-    let left = btnWidth + APP_LOGO_SIZE + this.#appTitleElement.rect.width;
+    let left = btnWidth + APP_LOGO_SIZE + this.#appTitleElement.rect[0].width;
     let right = winCtrlWidth;
     if (this.#avatar) {
       right += titlebarAvatarSize + AVATAR_PADDING;
@@ -187,7 +187,7 @@ class Titlebar implements ITitlebar {
     let img = $.pug<HTMLImageElement>('img(src=src)', { src: value.img });
     if (typeof value.action === 'function') {
       img.on('click', () => {
-        let { top, left } = this.#avatarElement.rect;
+        let { top, left } = this.#avatarElement.rect[0];
         value!.action!({
           top,
           left,

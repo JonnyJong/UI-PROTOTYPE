@@ -4,10 +4,12 @@ This module only work on renderer process!
 
 import path from 'path';
 import { render, renderFile } from 'pug';
-import type { UILang } from 'shared/components/lang';
-import type { UIText } from 'shared/components/text';
-import type { UIScroll } from 'shared/components/scroll';
-import { CSSTokens } from 'shared/types/dom';
+import {
+  CSSTokens,
+  DOMTagNameMap,
+  IDomAttribute,
+  IDomClass,
+} from 'shared/types/dom';
 
 function getRendererCwd() {
   let mod = module;
@@ -17,14 +19,7 @@ function getRendererCwd() {
 const layoutRoot = path.join(getRendererCwd(), 'views');
 const sharedLayoutRoot = path.join(__dirname, 'views');
 
-interface DOMTagNameMap extends HTMLElementTagNameMap {
-  'ui-lang': UILang;
-  'ui-text': UIText;
-  'ui-scroll': UIScroll;
-  // Add custom elements here
-}
-
-class Class<T extends HTMLElement> {
+class Class<T extends HTMLElement> implements IDomClass<T> {
   #dom: Dom<T>;
   constructor(dom: Dom<T>) {
     this.#dom = dom;
@@ -58,14 +53,13 @@ class Class<T extends HTMLElement> {
     }
   }
 }
-class Attribute<T extends HTMLElement> {
+class Attribute<T extends HTMLElement> implements IDomAttribute<T> {
   #dom: Dom<T>;
   constructor(dom: Dom<T>) {
     this.#dom = dom;
   }
   get(name: string) {
-    if (!this.#dom.length) return;
-    return this.#dom.at(0).getAttribute(name);
+    return this.#dom.doms.map((e) => e.getAttribute(name));
   }
   set(name: string, value: string) {
     for (const dom of this.#dom) {
@@ -81,8 +75,8 @@ class Attribute<T extends HTMLElement> {
 
 export class Dom<T extends HTMLElement = HTMLElement> {
   #doms: T[] = [];
-  #class: Class<T>;
-  #attr: Attribute<T>;
+  #class: IDomClass<T>;
+  #attr: IDomAttribute<T>;
   #dataset = new Proxy<{ [x: string]: string | undefined }>(
     {},
     {
@@ -158,12 +152,20 @@ export class Dom<T extends HTMLElement = HTMLElement> {
       }
     }
   }
+  /**
+   * Building the DOM from pug template
+   * @param pug Template content
+   * @param option Template compile options
+   */
   static pug<T extends HTMLElement = HTMLElement>(
     pug: string,
     options?: any
   ): Dom<T> {
     return Dom.html<T>(render(pug, options));
   }
+  /**
+   * Building the DOM from html
+   */
   static html<T extends HTMLElement = HTMLElement>(html: string): Dom<T> {
     let dom = document.createElement('div');
     dom.innerHTML = html;
@@ -174,6 +176,12 @@ export class Dom<T extends HTMLElement = HTMLElement> {
       })
     );
   }
+  /**
+   * Building the DOM from pug template file
+   * @param name Template file name
+   * @param option Template compile options
+   * @param shared Whether it is a shared template
+   */
   static layout<T extends HTMLElement = HTMLElement>(
     name: string,
     option?: any,
@@ -186,6 +194,9 @@ export class Dom<T extends HTMLElement = HTMLElement> {
       )
     );
   }
+  /**
+   * Building new DOM objects from strings, HTMLElement objects, DOM objects
+   */
   static from<T extends HTMLElement = HTMLElement>(
     ...args: (string | T | Dom<T>)[]
   ) {
@@ -206,6 +217,11 @@ export class Dom<T extends HTMLElement = HTMLElement> {
     }
     return new Dom(...doms);
   }
+  /**
+   * Creating element based on tag name
+   * @param tagName Tag name of element
+   * @param pack Returns the element or wrapped DOM object directly
+   */
   static new<K extends keyof DOMTagNameMap>(
     tagName: K,
     pack?: false
@@ -227,9 +243,15 @@ export class Dom<T extends HTMLElement = HTMLElement> {
     // @ts-ignore
     return new Dom<DOMTagNameMap[K]>(dom);
   }
+  /**
+   * Filtering out new DOM objects using callback functions
+   */
   filter(callback: (value: T, index: number, array: T[]) => boolean) {
     return new Dom<T>(...this.#doms.filter(callback));
   }
+  /**
+   * Query and return a new DOM object
+   */
   query<T extends HTMLElement = HTMLElement>(selector: string): Dom<T> {
     let doms: T[] = [];
     for (const dom of this.#doms) {
@@ -237,12 +259,22 @@ export class Dom<T extends HTMLElement = HTMLElement> {
     }
     return new Dom<T>(...doms);
   }
+  /**
+   * Calls the defined callback function on each element
+   * of the DOM and returns an array containing the result.
+   */
   map(callback: (value: T, index: number, array: T[]) => T) {
     return new Dom<T>(...this.#doms.map(callback));
   }
+  /**
+   * Clone and return a new DOM object
+   */
   clone(deep?: boolean): Dom<T> {
     return new Dom(...this.#doms.map((e) => e.cloneNode(deep) as T));
   }
+  /**
+   * Get the DOM object consisting of the children of all elements of the DOM object
+   */
   get children() {
     let children = [];
     for (const dom of this.#doms) {
@@ -251,65 +283,93 @@ export class Dom<T extends HTMLElement = HTMLElement> {
     return new Dom<HTMLElement>(...children);
   }
   //#region Readonly Properties
+  /**
+   * Provides methods for manipulating element class names
+   */
   get class() {
     return this.#class;
   }
+  /**
+   * Getting the attributes of the first element
+   */
   get attr() {
     return this.#attr;
   }
+  /**
+   * Get the number of elements
+   */
   get length() {
     return this.#doms.length;
   }
-  get rect(): DOMRect {
-    if (!this.#doms.length) {
-      let rect = {
-        height: 0,
-        width: 0,
-        x: 0,
-        y: 0,
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        toJSON: () => rect,
-      };
-      return rect;
-    }
-    return this.#doms[0].getBoundingClientRect();
+  /**
+   * Get the DOMRect of all elements
+   */
+  get rect(): DOMRect[] {
+    return this.#doms.map((e) => e.getBoundingClientRect());
   }
+  /**
+   * Manage dataset for all elements
+   */
+  get data() {
+    return this.#dataset;
+  }
+  /**
+   * Manage style for all elements
+   */
+  get style() {
+    return this.#style;
+  }
+  /**
+   * Get all the elements in the DOM object
+   */
+  get doms() {
+    return [...this.#doms];
+  }
+  //#region Other
+  /**
+   * Get the id of the first element
+   */
   get id(): string | undefined {
     return this.#doms[0]?.id;
   }
+  /**
+   * Set the id of all the element
+   */
   set id(value: string) {
     for (const dom of this.#doms) {
       dom.id = value;
     }
   }
-  get data() {
-    return this.#dataset;
-  }
-  get style() {
-    return this.#style;
-  }
-  get doms() {
-    return [...this.#doms];
-  }
-  //#region Other
   [Symbol.iterator]() {
     return this.#doms[Symbol.iterator]();
   }
+  /**
+   * Get the element of the DOM object with the specified subscript
+   */
   at(i: number) {
     return this.#doms[i];
   }
+  /**
+   * Performs the specified action for each element in DOM object
+   */
   forEach(callback: (value: T, index: number, array: T[]) => void) {
     this.#doms.forEach(callback);
   }
+  /**
+   * Determines whether all the members of DOM object satisfy the specified test
+   */
   every(callback: (value: T, index: number, array: T[]) => boolean) {
     return this.#doms.every(callback);
   }
+  /**
+   * Determines whether the specified callback function returns true for any element of DOM object
+   */
   any(callback: (value: T, index: number, array: T[]) => boolean) {
     return this.#doms.some(callback);
   }
+  /**
+   * Inserts elements before all elements in the DOM object
+   */
   before(...args: (Dom | HTMLElement | string)[]) {
     let doms = Dom.from(...args);
     if (this.length === 1) {
@@ -320,6 +380,9 @@ export class Dom<T extends HTMLElement = HTMLElement> {
       dom.before(...doms.map((e) => e.cloneNode(true) as HTMLElement));
     }
   }
+  /**
+   * Inserts the elements as the first child of all elements in the DOM object
+   */
   prepend(...args: (Dom | HTMLElement | string)[]) {
     let doms = Dom.from(...args);
     if (this.length === 1) {
@@ -330,6 +393,9 @@ export class Dom<T extends HTMLElement = HTMLElement> {
       dom.prepend(...doms.map((e) => e.cloneNode(true) as HTMLElement));
     }
   }
+  /**
+   * Inserts the elements as the last child of all elements in the DOM object
+   */
   append(...args: (Dom | HTMLElement | string)[]) {
     let doms = Dom.from(...args);
     if (this.length === 1) {
@@ -340,6 +406,9 @@ export class Dom<T extends HTMLElement = HTMLElement> {
       dom.append(...doms.map((e) => e.cloneNode(true) as HTMLElement));
     }
   }
+  /**
+   * Inserts elements after all elements in the DOM object
+   */
   after(...args: (Dom | HTMLElement | string)[]) {
     let doms = Dom.from(...args);
     if (this.length === 1) {
@@ -350,6 +419,9 @@ export class Dom<T extends HTMLElement = HTMLElement> {
       dom.after(...doms.map((e) => e.cloneNode(true) as HTMLElement));
     }
   }
+  /**
+   * Adding listeners to all elements of a DOM object
+   */
   on<K extends keyof HTMLElementEventMap>(
     type: K,
     listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any,
@@ -364,6 +436,9 @@ export class Dom<T extends HTMLElement = HTMLElement> {
       dom.addEventListener(type, listener, options);
     }
   }
+  /**
+   * Removing listeners to all elements of a DOM object
+   */
   off<K extends keyof HTMLElementEventMap>(
     type: K,
     listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any,
@@ -378,6 +453,9 @@ export class Dom<T extends HTMLElement = HTMLElement> {
       dom.removeEventListener(type, listener, options);
     }
   }
+  /**
+   * Adding elements to a DOM object
+   */
   push(...doms: (T | Dom<T>)[]) {
     for (const dom of doms) {
       if (dom instanceof Dom) {
@@ -390,6 +468,9 @@ export class Dom<T extends HTMLElement = HTMLElement> {
       }
     }
   }
+  /**
+   * Removing specific elements from a DOM object
+   */
   remove(...doms: (T | Dom<T> | number)[]) {
     for (const dom of doms) {
       if (dom instanceof Dom) {
@@ -408,12 +489,38 @@ export class Dom<T extends HTMLElement = HTMLElement> {
   }
 }
 
+/**
+ * Querying in document and wrapping the result as a DOM object
+ */
 export function $<T extends HTMLElement = HTMLElement>(
   ...args: (string | T | Dom<T>)[]
 ): Dom<T> {
   return new Dom<T>(...args);
 }
+/**
+ * Building the DOM from pug template
+ * @param pug Template content
+ * @param option Template compile options
+ */
 $.pug = Dom.pug;
+/**
+ * Building the DOM from html
+ */
 $.html = Dom.html;
+/**
+ * Building the DOM from pug template file
+ * @param name Template file name
+ * @param option Template compile options
+ * @param shared Whether it is a shared template
+ */
 $.layout = Dom.layout;
+/**
+ * Building new DOM objects from strings, HTMLElement objects, DOM objects
+ */
+$.from = Dom.from;
+/**
+ * Creating element based on tag name
+ * @param tagName Tag name of element
+ * @param pack Returns the element or wrapped DOM object directly
+ */
 $.new = Dom.new;
