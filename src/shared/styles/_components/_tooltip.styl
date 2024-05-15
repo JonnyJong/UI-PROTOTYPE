@@ -1,0 +1,20 @@
+.tooltip
+  position fixed
+  border-radius 5px
+  background var(--bg-tsp7)
+  backdrop-filter blur(20px)
+  border 1px solid #8884
+  line-height 1
+  padding 10px
+  white-space nowrap
+  font-size 12px
+  pointer-events none
+  opacity 0
+  scale .9
+  color #0000
+  transition .1s opacity, .1s scale, .1s .05s color
+  z-index 10
+.tooltip-show
+  opacity 1
+  scale 1
+  color var(--color)

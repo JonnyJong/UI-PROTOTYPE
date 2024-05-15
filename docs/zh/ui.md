@@ -146,7 +146,7 @@ type action = Function;
 type tooltip = string;
 ```
 可选参数，图标的工具提示，设置为 `undefined` 时移除工具提示。
-<!-- TODO: 此处需要补全 tooltip 链接 -->
+参考：[`Tooltip`](#componentstooltipts)。
 
 ##### 属性：`hidden`
 ```typescript
@@ -704,3 +704,10 @@ type disabled = boolean;
 type hidden = boolean;
 ```
 可选参数，隐藏按钮。
+
+#### 模块：`components\tooltip.ts`
+工具提示模块。  
+该模块没有导出，只需引入该模块，就可以使用工具提示。
+```pug
+div(tooltip="HTML <i>Text</i> here.")
+```

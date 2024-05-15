@@ -1,5 +1,10 @@
-type ComponentNameMap = 'lang' | 'scroll' | 'text';
-const ComponentNames: ComponentNameMap[] = ['lang', 'scroll', 'text'];
+type ComponentNameMap = 'lang' | 'scroll' | 'text' | 'tooltip';
+const ComponentNames: ComponentNameMap[] = [
+  'lang',
+  'scroll',
+  'text',
+  'tooltip',
+];
 
 /** [Document](https://ui-prototype.jonnys.top/zh/ui/#initcomponents) */
 export function initComponents(...componentNames: ComponentNameMap[]) {

@@ -7,6 +7,15 @@ $blur = blur(20px) saturate(5)
 
 :root
   --bg $bgLigh
+  --bg-tsp1 alpha($bgLight, 0.1)
+  --bg-tsp2 alpha($bgLight, 0.2)
+  --bg-tsp3 alpha($bgLight, 0.3)
+  --bg-tsp4 alpha($bgLight, 0.4)
+  --bg-tsp5 alpha($bgLight, 0.5)
+  --bg-tsp6 alpha($bgLight, 0.6)
+  --bg-tsp7 alpha($bgLight, 0.7)
+  --bg-tsp8 alpha($bgLight, 0.8)
+  --bg-tsp9 alpha($bgLight, 0.9)
   --color #000
   --color-tsp1 #0001
   --color-tsp2 #0002
@@ -29,6 +38,15 @@ $blur = blur(20px) saturate(5)
   --theme-color dark($theme) ? #fff : #ddd
   @media (prefers-color-scheme: dark)
     --bg $bgDark
+    --bg-tsp1 alpha($bgDark, 0.1)
+    --bg-tsp2 alpha($bgDark, 0.2)
+    --bg-tsp3 alpha($bgDark, 0.3)
+    --bg-tsp4 alpha($bgDark, 0.4)
+    --bg-tsp5 alpha($bgDark, 0.5)
+    --bg-tsp6 alpha($bgDark, 0.6)
+    --bg-tsp7 alpha($bgDark, 0.7)
+    --bg-tsp8 alpha($bgDark, 0.8)
+    --bg-tsp9 alpha($bgDark, 0.9)
     --color #ddd
     --color-tsp1 #ddd1
     --color-tsp2 #ddd2
