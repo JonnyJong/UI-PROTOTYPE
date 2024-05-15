@@ -8,7 +8,7 @@ const DTSTemplate = `/** [Document](https://ui-prototype.jonnys.top/zh/locales/#
 export type LocaleDict = { [key: string]: string | LocaleDict };
 
 /** [Document](https://ui-prototype.jonnys.top/zh/locales/#localekeys) */
-export type LocaleKeys = `;
+export type LocaleKeys = '`;
 
 function walkKeys(object, keys, name) {
   for (const key in object) {
