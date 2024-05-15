@@ -19,6 +19,32 @@ function getRendererCwd() {
 const layoutRoot = path.join(getRendererCwd(), 'views');
 const sharedLayoutRoot = path.join(__dirname, 'views');
 
+const DEFAULT_LAYOUT_API = {
+  config: (file: string, keys: string): any => {
+    if (typeof file !== 'string') return;
+    if (typeof keys !== 'string') return;
+
+    let config;
+    try {
+      config = require(path.join(__dirname, '../config', file + '.json'));
+    } catch {
+      return;
+    }
+
+    for (const key of keys.split('.')) {
+      if (typeof config !== 'object') return;
+      config = config[key];
+    }
+
+    return config;
+  },
+};
+
+function getLayoutAPI(options?: any): any {
+  if (typeof options !== 'object') return Object.assign({}, DEFAULT_LAYOUT_API);
+  return Object.assign(DEFAULT_LAYOUT_API, options);
+}
+
 class Class<T extends HTMLElement> implements IDomClass<T> {
   #dom: Dom<T>;
   constructor(dom: Dom<T>) {
@@ -179,18 +205,18 @@ export class Dom<T extends HTMLElement = HTMLElement> {
   /**
    * Building the DOM from pug template file
    * @param name Template file name
-   * @param option Template compile options
+   * @param options Template compile options
    * @param shared Whether it is a shared template
    */
   static layout<T extends HTMLElement = HTMLElement>(
     name: string,
-    option?: any,
+    options?: any,
     shared: boolean = false
   ): Dom<T> {
     return Dom.html<T>(
       renderFile(
         path.join(shared ? sharedLayoutRoot : layoutRoot, name + '.pug'),
-        option
+        getLayoutAPI(options)
       )
     );
   }
