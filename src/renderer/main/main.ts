@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   titlebar.init();
   pages.define('home', PageHome);
   pages.init();
-  (window as any).pages = pages;
 });
 
 // XXX: Dev functions, remove before release

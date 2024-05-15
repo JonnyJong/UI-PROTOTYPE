@@ -26,6 +26,12 @@ const CONTROL_BUTTON_PUG = `
   div(class="icon icon-" + icon)
 `;
 
+interface WindowControls {
+  close: 'close' | 'hide' | 'none';
+  resize: boolean;
+  minimize: boolean;
+}
+
 class Titlebar implements ITitlebar {
   #titlebarElement!: Dom;
   #buttonsElement!: Dom;
@@ -83,6 +89,24 @@ class Titlebar implements ITitlebar {
     this.#flexElement.style.padding = `0 ${left}px 0 ${right}px`;
     this.#titlebarElement.style['--window-control-width'] = winCtrlWidth + 'px';
   }
+  #setWindowControls(controls: WindowControls) {
+    this.#windowControlClose = controls.close;
+    this.#windowControlCloseElement.class.toggle(
+      'window-control-hidden',
+      controls.close === 'none'
+    );
+    this.#windowControlResize = controls.resize;
+    this.#windowControlResizeElement.class.toggle(
+      'window-control-hidden',
+      !controls.resize
+    );
+    this.#windowControlMinimize = controls.minimize;
+    this.#windowControlMinimizeElement.class.toggle(
+      'window-control-hidden',
+      !controls.minimize
+    );
+    this.#resize();
+  }
   #updateWindowControls() {
     ipcRenderer.send('win:controls', {
       close: this.#windowControlClose,
@@ -103,11 +127,7 @@ class Titlebar implements ITitlebar {
     this.#windowControlResizeElement = $('#window-resize');
     this.#windowControlCloseElement = $('#window-close');
     this.#windowControlsContainerElement = $('#window-controls-container');
-    let controls = await ipcRenderer.invoke('win:controls');
-    this.windowControlClose = controls.close;
-    this.windowControlMinimize = controls.minimize;
-    this.windowControlResize = controls.resize;
-    this.#resize();
+    this.#setWindowControls(await ipcRenderer.invoke('win:controls'));
     // Setup events
     this.#windowControlMinimizeElement.on('click', () => {
       if (!this.#windowControlMinimize) return;
@@ -122,10 +142,7 @@ class Titlebar implements ITitlebar {
       ipcRenderer.send('win:' + this.#windowControlClose);
     });
     ipcRenderer.on('win:controls', (_, controls) => {
-      this.windowControlClose = controls.close;
-      this.windowControlMinimize = controls.minimize;
-      this.windowControlResize = controls.resize;
-      this.#resize();
+      this.#setWindowControls(controls);
     });
   }
   get state(): string | HTMLElement | Dom {
@@ -231,6 +248,10 @@ class Titlebar implements ITitlebar {
   set windowControlClose(value: 'close' | 'hide' | 'none') {
     if (!['close', 'hide', 'none'].includes(value)) return;
     this.#windowControlClose = value;
+    this.#windowControlCloseElement.class.toggle(
+      'window-control-hidden',
+      value === 'none'
+    );
     this.#updateWindowControls();
   }
   get windowControlResize(): boolean {
