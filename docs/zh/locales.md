@@ -1,10 +1,6 @@
----
-title: 多语言支持
----
-# 概述
+# 多语言支持
 UI-PROTOTYPE 提供了基本的多语言功能，支持设置多个后备语言。
 
-# 使用说明
 ## 添加语言
 1. 在`locales`目录下新建以语言 ID 命名的文件夹
 2. 在文件夹内任意目录下创建任意后缀名为`.yml`或`.yaml`的文件
@@ -22,28 +18,42 @@ UI-PROTOTYPE 提供了基本的多语言功能，支持设置多个后备语言�
 默认语言用于生成`src/shared/types/locales.d.ts`定义文件，对程序运行没有影响，只用于开发时智能提示。  
 建议设置包含键值最完整的语言作为默认语言。
 
-# API
-## `main/ui/locale`
-### locale
+## API
+### main/ui/locale
+#### 函数：`locale`
 ```typescript
-locale(keys: LocaleKeys): string;
+function locale(keys: LocaleKeys): string;
 ```
 通过键值获取对应翻译，没有找到对应翻译时返回键值。
 
-### getLocaleDict
+#### 函数：`getLocaleDict`
 ```typescript
-getLocaleDict(): LocaleDict;
+function getLocaleDict(): LocaleDict;
 ```
 获取所有翻译。
 
-### loadLocales
+#### 函数：`loadLocales`
 ```typescript
-loadLocales(localesList: string[]): Promise<void>;
+function loadLocales(localesList: string[]): Promise<void>;
 ```
-根据语言列表加载翻译。
+根据语言列表加载翻译文件。
 
-# 其他
-## 关于加载语言
+### shared/types/locales
+
+#### 类型：`LocaleDict`
+```typescript
+type LocaleDict = { [key: string]: string | LocaleDict };
+```
+翻译词典。
+
+#### 类型：`LocaleKeys`
+```typescript
+export type LocaleKeys = string;
+```
+翻译词典键值集合，编译翻译文件时自动生成。
+
+## 其他
+### 关于加载语言
 加载语言时，将从优先级最低的语言开始加载，优先级较高的语言将会覆盖优先级较低的语言。  
 若出现数组，会将数组作为普通的对象进行处理。  
 所有的非字符串及非对象类型将会强制转换为字符串。

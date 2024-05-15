@@ -150,6 +150,7 @@ function createCanvas(
   return canvas;
 }
 
+/** [Document](https://ui-prototype.jonnys.top/zh/ui/#initmica) */
 export async function initMica() {
   // BUG: Displaying exceptions on multiple screens
   // Get Sample Data

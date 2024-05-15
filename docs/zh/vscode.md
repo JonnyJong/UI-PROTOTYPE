@@ -1,8 +1,4 @@
----
-title: 使用 VSCode 开发
----
-
-# 概述
+# 使用 VSCode 开发
 推荐使用 VSCode 开发 UI-PROTOTYPE。
 
 下面是推荐安装的插件。

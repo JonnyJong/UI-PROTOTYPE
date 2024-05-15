@@ -1,13 +1,10 @@
----
-title: 图标
----
-
-# 概述
+# 图标
 UI-PROTOTYPE 内置了 [Segoe Fluent Icons](https://learn.microsoft.com/en-us/windows/apps/design/style/segoe-ui-symbol-font)。
 
-# 使用方式
 ## 查询图标名
 访问[https://learn.microsoft.com/en-us/windows/apps/design/style/segoe-ui-symbol-font](https://learn.microsoft.com/en-us/windows/apps/design/style/segoe-ui-symbol-font#pua-e700-e900)，`Description`列即为图标名。
+
+若使用 Windows 10 或 Windows 11 系统，可以安装 [WinUI 3 Gallery](https://apps.microsoft.com/detail/9p3jfpwwdzrc)，在 “Design guidance” > “Icons” 中查找。
 
 ## 使用图标
 ```pug
@@ -34,8 +31,8 @@ UI-PROTOTYPE 内置了 [Segoe Fluent Icons](https://learn.microsoft.com/en-us/wi
 
 重复 1、4、5、9 步骤可添加多个图标。
 
-# 其他
-## 免费图标库
+## 其他
+### 免费图标库
 
 - [Material Symbols and Icons - Google Fonts](https://fonts.google.com/icons)
 - [@mdui/icons 图标组件库](https://www.mdui.org/docs/2/libraries/icons)

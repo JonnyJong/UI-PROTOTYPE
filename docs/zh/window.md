@@ -1,8 +1,4 @@
----
-title: 窗口
----
-
-# 概述
+# 窗口
 UI-PROTOTYPE 提供了更加便利的创建窗口的函数，并提供了一些预定义的功能，包括：
 - 自动设置 `preload`
 - 窗口图标
@@ -11,7 +7,6 @@ UI-PROTOTYPE 提供了更加便利的创建窗口的函数，并提供了一些�
 - 自动加载 HTML
 - 窗口就绪时显示
 
-# 使用说明
 ## 添加基本窗口事件
 修改`src/main/ui/window.ts`中的`IpcEventHandlers`常量，参考：
 ```typescript
@@ -57,15 +52,144 @@ ipcRenderer.send('_scope_:event_name');
   let newWindow = new Window('<win_id>');
   ```
 
-关于样式文件，请查阅[样式](../style)章节。  
-关于 HTML 模板，请查阅[HTML 模板](../layout)章节。
+关于样式文件，请查阅[样式](./style.md)章节。  
+关于 HTML 模板，请查阅[HTML 模板](./layout.md)章节。
 
-# API
-## `main/ui/window`
+## API
+### main/ui/window
 
-### initMainWindow
+#### 函数：`initMainWindow`
 ```typescript
-initMainWindow(): BrowserWindow;
+function initMainWindow(): Window;
 ```
 初始化主窗口。  
 建议尽早地初始化主窗口，提升用户体验。
+
+#### 类：`Window`
+继承自 `Electron.BrowserWindow`，经包装的窗口类，为接口 [`IWindow`](#iwindow) 的实现。
+
+#### 类型：`WindowStateTemplate`
+```typescript
+type WindowStateTemplate = [
+  maximized: boolean,
+  width: number,
+  height: number,
+  x: number,
+  y: number,
+];
+```
+窗口状态模板。
+
+#### 类型：`WindowIpcEventHandler`
+```typescript
+type WindowIpcEventHandler = (
+  window: IWindow,
+  event: string,
+  ...args: any[]
+) => any;
+```
+窗口 IPC 事件处理器。
+
+#### 接口：`IWindowState`
+窗口状态管理接口。
+
+##### 方法：`save`
+```typescript
+function save(): Promise<void>;
+```
+保存当前窗口状态。  
+通常情况下，在窗口状态改变后都能自动保存。
+
+##### 方法：`show`
+```typescript
+function show(): Promise<void>;
+```
+根据保存的窗口状态显示窗口。  
+建议只在窗口第一次显示时调用。若设置窗口自动显示，则会自动调用。
+
+#### 接口：`IWindowControls`
+窗口控件管理接口。
+
+##### 属性：`close`
+```typescript
+type close = 'close' | 'hide' | 'none';
+```
+窗口关闭按钮。
+
+| 值      | 说明                       |
+| ------- | -------------------------- |
+| `close` | 显示该按钮，点击后关闭窗口 |
+| `hide`  | 显示该按钮，点击后隐藏窗口 |
+| `none`  | 隐藏该按钮                 |
+
+##### 属性：`resize`
+```typescript
+type resize = boolean;
+```
+窗口最大化/还原按钮。
+
+##### 属性：`minimize`
+```typescript
+type minimize = boolean;
+```
+窗口最小化按钮。
+
+#### 接口：`WindowControlsConstructorOptions`
+窗口控件构建参数，与 [`IWindowControls`](#iwindowcontrols) 类似，但所有的参数都是可选的，默认参数如下：
+```typescript
+{
+  close: 'close',
+  resize: true,
+  minimize: true,
+}
+```
+
+#### 接口：`WindowConstructorOptions`
+窗口构建参数，继承自 `Electron.BrowserWindowConstructorOptions`。
+
+##### 属性：`autoShow`
+```typescript
+type autoShow = boolean;
+```
+可选参数，自动显示窗口，默认 `false`。  
+启用后，创建窗口时默认隐藏，当窗口准备好显示后，自动显示窗口。
+
+##### 属性：`controls`
+```typescript
+type controls = WindowControlsConstructorOptions;
+```
+可选参数，窗口控件构建参数，参考：[`WindowControlsConstructorOptions`](#windowcontrolsconstructoroptions)。
+
+#### 接口：`IWindow`
+类 [`Window`](#window) 的接口。
+
+##### 构造函数
+```typescript
+function constructor(root: string, options?: WindowConstructorOptions): Window;
+```
+
+##### 静态函数：`getWindowByEvent`
+```typescript
+function getWindowByEvent(event: IpcMainInvokeEvent): IWindow | null;
+```
+通过 `IpcMainInvokeEvent` 查找对应的 `Window` 类并返回。
+
+##### 属性：`root`
+```typescript
+type root = string;
+```
+只读属性，窗口对应的渲染进程根位置。
+
+##### 属性：`state`
+```typescript
+type state = IWindowState;
+```
+只读属性，窗口状态管理接口。  
+参考：[`IWindowState`](#iwindowstate)。
+
+##### 属性：`controls`
+```typescript
+type controls = IWindowControls;
+```
+只读属性，窗口控件管理接口。  
+参考：[`IWindowControls`](#iwindowcontrols)。

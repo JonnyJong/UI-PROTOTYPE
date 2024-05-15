@@ -585,4 +585,5 @@ class Pages implements IPages {
   }
 }
 
+/** [Document](https://ui-prototype.jonnys.top/zh/ui/#pages) */
 export const pages = new Pages();

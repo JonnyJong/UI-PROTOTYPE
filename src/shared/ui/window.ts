@@ -2,6 +2,8 @@ import { ipcRenderer } from 'electron';
 
 /**
  * Initializes window events.
+ *
+ * [Document](https://ui-prototype.jonnys.top/zh/ui/#initwindowevents)
  */
 export function initWindowEvents() {
   ipcRenderer.on('win:active', (_, isFocus) => {

@@ -1,5 +1,6 @@
 import { locale } from 'shared/ui/locale';
 
+/** [Document](https://ui-prototype.jonnys.top/zh/ui/#uilang) */
 export class UILang extends HTMLElement {
   #inited = false;
   #key: string = '';
@@ -13,6 +14,8 @@ export class UILang extends HTMLElement {
   }
   /**
    * The key of the locale text.
+   *
+   * [Document](https://ui-prototype.jonnys.top/zh/ui/#key)
    */
   get key() {
     return this.#key;
@@ -23,6 +26,8 @@ export class UILang extends HTMLElement {
   }
   /**
    * Updating of translated text.
+   *
+   * [Document](https://ui-prototype.jonnys.top/zh/ui/#update)
    */
   update() {
     this.textContent = this.#key === '' ? '' : locale(this.key as any);

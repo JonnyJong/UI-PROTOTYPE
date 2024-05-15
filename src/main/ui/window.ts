@@ -254,6 +254,8 @@ export class Window extends BrowserWindow implements IWindow {
 /**
  * Initializes the main browser window with predefined options.
  * @returns - The created main browser window.
+ *
+ * [Document](https://ui-prototype.jonnys.top/zh/window/#initmainwindow)
  */
 export function initMainWindow(): Window {
   let mainWindow = new Window('main', {

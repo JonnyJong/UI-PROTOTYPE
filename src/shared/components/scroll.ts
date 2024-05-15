@@ -2,6 +2,7 @@ import { $ } from 'shared/utils/dom';
 
 const SCROLL_INCREMENTAL = 32;
 
+/** [Document](https://ui-prototype.jonnys.top/zh/ui/#uitext) */
 export class UIScroll extends HTMLElement {
   #inited = false;
   #track = $.pug<HTMLDivElement>('.ui-scroll-track').at(0);
@@ -145,6 +146,8 @@ export class UIScroll extends HTMLElement {
   //#region Public
   /**
    * Whether the scrollbar is horizontal.
+   *
+   * [Document](https://ui-prototype.jonnys.top/zh/ui/#horizontal)
    */
   get horizontal() {
     return this.#horizontal;
@@ -156,6 +159,8 @@ export class UIScroll extends HTMLElement {
   }
   /**
    * Elements associated with the scrollbar.
+   *
+   * [Document](https://ui-prototype.jonnys.top/zh/ui/#target_1)
    */
   get target() {
     return this.#target;

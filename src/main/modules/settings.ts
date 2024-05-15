@@ -37,6 +37,7 @@ const Serializers: Serializers = {};
 
 const Deserializers: Deserializers = {};
 
+/** [Document](https://ui-prototype.jonnys.top/zh/settings/#settings) */
 class Settings {
   #settings: SettingsKeyMap = getDefaultSettings();
   /**
@@ -44,6 +45,8 @@ class Settings {
    *
    * The initialization must be completed before reading or modifying the settings.
    * @returns A promise that resolves once the initialization is complete.
+   *
+   * [Document](https://ui-prototype.jonnys.top/zh/settings/#init)
    */
   async init() {
     let data: { [key: string]: SerializedData };
@@ -68,6 +71,8 @@ class Settings {
   /**
    * Asynchronously saves the application settings.
    * @returns A promise that resolves once the settings have been successfully saved.
+   *
+   * [Document](https://ui-prototype.jonnys.top/zh/settings/#save)
    */
   async save() {
     let data: { [key: string]: SerializedData } = {};
@@ -88,6 +93,8 @@ class Settings {
    * Retrieves the value of a specific setting.
    * @param key - The key of the setting to retrieve.
    * @returns - The value of the specified setting.
+   *
+   * [Document](https://ui-prototype.jonnys.top/zh/settings/#get)
    */
   get<T extends keyof SettingsKeyMap>(key: T): SettingsKeyMap[T] {
     return rfdc()(this.#settings[key]);
@@ -99,6 +106,8 @@ class Settings {
    * @returns - Returns undefined if the modification is successful.
    * Returns 'INVALID_KEY' if the setting key does not exist.
    * Returns 'INVALID_VALUE' if the provided value fails validation.
+   *
+   * [Document](https://ui-prototype.jonnys.top/zh/settings/#set)
    */
   set<T extends keyof SettingsKeyMap>(
     key: T,
@@ -113,6 +122,8 @@ class Settings {
   }
   /**
    * Resets all settings to default values.
+   *
+   * [Document](https://ui-prototype.jonnys.top/zh/settings/#reset)
    */
   reset() {
     this.#settings = getDefaultSettings();

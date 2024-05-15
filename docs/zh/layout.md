@@ -1,12 +1,7 @@
----
-title: HTML 模板
----
-
-# 概述
+# HTML 模板
 UI-PROTOTYPE 使用 Pug 来编写 HTML 模板。  
 关于 Pug 使用方法，请查阅[Pug中文网](https://www.pugjs.cn)。
 
-# 使用说明
 ## 为窗口编写 main.html
 `main.html` 是窗口默认加载的 HTML 文件，根据窗口所在文件夹下`views/_main.pug`生成。
 以下是一个基本示例：
@@ -24,17 +19,18 @@ html
 ## 共享模板
 UI-PROTOTYPE 提供了一些共享的 HTML 模板，均储存在`src/shared/views`目录中。
 
-| 文件名         | 说明   |
-| -------------- | ------ |
+| 文件名          | 说明   |
+| --------------- | ------ |
 | `_titlebar.pug` | 标题栏 |
 
 ## 使用模板
-TODO...
+可以通过 [`Dom.layout`](./utils.md#layout) API 使用模板。
 
-# API
-## config
-*该函数仅限 HTML 模板中使用。*
+## API
+这些接口只能在模板中使用。
+
+### 函数：`config`
 ```typescript
-config(file: string, keys: string): any;
+function config(file: string, keys: string): any;
 ```
 用于读取`src/shared/config`下的配置文件对应的键值，不存在时返回`undefined`。

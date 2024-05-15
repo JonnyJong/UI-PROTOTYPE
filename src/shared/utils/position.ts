@@ -1,6 +1,7 @@
 import { Align, OutlineRect, Side, Size } from 'shared/types/position';
 import { safetyZone } from '../config/ui.json';
 
+/** [Document](https://ui-prototype.jonnys.top/zh/utils/#setposition) */
 export function setPosition(
   target: HTMLElement,
   size: Size,
@@ -102,6 +103,7 @@ export function setPosition(
   return side;
 }
 
+/** [Document](https://ui-prototype.jonnys.top/zh/utils/#getscalefactor) */
 export function getScaleFactor(w: number, h: number, increment: number) {
   let avg = (w + h) / 2;
   if (avg + increment < 0) return 0;

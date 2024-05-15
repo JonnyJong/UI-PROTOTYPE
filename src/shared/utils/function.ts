@@ -1,6 +1,7 @@
 import { OperationSequence } from 'shared/types/function';
 import { sleep } from './timer';
 
+/** [Document](https://ui-prototype.jonnys.top/zh/utils/#run) */
 export function run<T = any, Args extends Array<any> = any[]>(
   fn: any,
   ...args: Args
@@ -19,6 +20,7 @@ export function run<T = any, Args extends Array<any> = any[]>(
   });
 }
 
+/** [Document](https://ui-prototype.jonnys.top/zh/utils/#runsequence) */
 export async function runSequence(
   sequence: OperationSequence,
   ignoreError = false

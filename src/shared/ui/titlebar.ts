@@ -296,5 +296,7 @@ class Titlebar implements ITitlebar {
 
 /**
  * Window titlebar
+ *
+ * [Document](https://ui-prototype.jonnys.top/zh/ui/#titlebar)
  */
 export const titlebar = new Titlebar();

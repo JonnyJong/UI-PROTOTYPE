@@ -3,18 +3,30 @@ import { unid } from 'shared/utils/id';
 import { setPosition } from 'shared/utils/position';
 import type { UIScroll } from './scroll';
 
+/** [Document](https://ui-prototype.jonnys.top/zh/ui/#uitextsuggest) */
 export interface UITextSuggest {
+  /** [Document](https://ui-prototype.jonnys.top/zh/ui/#label) */
   label: string | HTMLElement | Dom;
+  /** [Document](https://ui-prototype.jonnys.top/zh/ui/#text) */
   text?: string;
+  /** [Document](https://ui-prototype.jonnys.top/zh/ui/#action_3) */
   action?: Function;
 }
+/** [Document](https://ui-prototype.jonnys.top/zh/ui/#autosuggest_1) */
 export type AutoSuggest = (value: string) => (string | UITextSuggest)[];
+/** [Document](https://ui-prototype.jonnys.top/zh/ui/#uitextbutton) */
 export interface UITextButton {
+  /** [Document](https://ui-prototype.jonnys.top/zh/ui/#icon_1) */
   icon: string;
+  /** [Document](https://ui-prototype.jonnys.top/zh/ui/#action_4) */
   action: (text: UIText, id?: string) => any;
+  /** [Document](https://ui-prototype.jonnys.top/zh/ui/#tooltip_1) */
   tooltip?: string;
+  /** [Document](https://ui-prototype.jonnys.top/zh/ui/#id_1) */
   id?: string;
+  /** [Document](https://ui-prototype.jonnys.top/zh/ui/#disabled_2) */
   disabled?: boolean;
+  /** [Document](https://ui-prototype.jonnys.top/zh/ui/#hidden_1) */
   hidden?: boolean;
 }
 
@@ -100,6 +112,7 @@ function buttonFilter(value: UITextButton[]): UITextButton[] {
     });
 }
 
+/** [Document](https://ui-prototype.jonnys.top/zh/ui/#uitext) */
 export class UIText extends HTMLElement {
   #inited = false;
   #id = unid();
@@ -433,6 +446,7 @@ export class UIText extends HTMLElement {
   /**
    * Whether the text box is multi-line.
    */
+  /** [Document](https://ui-prototype.jonnys.top/zh/ui/#multiline) */
   get multiLine() {
     return this.#inputBox.tagName === 'TEXTAREA';
   }
@@ -442,6 +456,8 @@ export class UIText extends HTMLElement {
   }
   /**
    * Whether the text box is disabled.
+   *
+   * [Document](https://ui-prototype.jonnys.top/zh/ui/#disabled_1)
    */
   get disabled() {
     return this.#disabled;
@@ -458,6 +474,8 @@ export class UIText extends HTMLElement {
   /**
    * Sets or retrieves the value indicated
    * whether the content of the object is read-only.
+   *
+   * [Document](https://ui-prototype.jonnys.top/zh/ui/#readonly)
    */
   get readonly() {
     return this.#inputBox.readOnly;
@@ -467,6 +485,8 @@ export class UIText extends HTMLElement {
   }
   /**
    * The text box's header.
+   *
+   * [Document](https://ui-prototype.jonnys.top/zh/ui/#header)
    */
   get header(): string | HTMLElement[] {
     if (this.#header.children) {
@@ -487,6 +507,8 @@ export class UIText extends HTMLElement {
    * as a hint or prompt to users
    * as the format or type of information they need to enter.
    * The text appears in an input field until the user puts focus on the field.
+   *
+   * [Document](https://ui-prototype.jonnys.top/zh/ui/#placeholder)
    */
   get placeholder(): string | HTMLElement[] {
     if (this.#placeholder.children) {
@@ -506,6 +528,8 @@ export class UIText extends HTMLElement {
    * Returns the value currently entered by the user,
    * or the value previously entered by the user
    * when the user is selecting a suggestion.
+   *
+   * [Document](https://ui-prototype.jonnys.top/zh/ui/#value)
    */
   get value() {
     if (typeof this.#prevValue === 'string') return this.#prevValue;
@@ -522,6 +546,8 @@ export class UIText extends HTMLElement {
   /**
    * Auto Suggestions for Input Boxes invokes and generates auto suggestions
    * or matches that are displayed near the input box when the user types.
+   *
+   * [Document](https://ui-prototype.jonnys.top/zh/ui/#autosuggest)
    */
   get autoSuggest() {
     if (typeof this.#autoSuggest === 'function') return this.#autoSuggest;
@@ -538,6 +564,8 @@ export class UIText extends HTMLElement {
   }
   /**
    * Retrieve whether the user is selecting a suggest.
+   *
+   * [Document](https://ui-prototype.jonnys.top/zh/ui/#isselectingsuggest)
    */
   get isSelectingSuggest() {
     return (
@@ -548,6 +576,8 @@ export class UIText extends HTMLElement {
   }
   /**
    * Buttons on the left side of the input box.
+   *
+   * [Document](https://ui-prototype.jonnys.top/zh/ui/#leftbuttons)
    */
   get leftButtons() {
     return buttonFilter(this.#leftButtons);
@@ -558,6 +588,8 @@ export class UIText extends HTMLElement {
   }
   /**
    * Buttons on the right side of the input box.
+   *
+   * [Document](https://ui-prototype.jonnys.top/zh/ui/#rightbuttons)
    */
   get rightButtons() {
     return buttonFilter(this.#rightButtons);
@@ -570,6 +602,8 @@ export class UIText extends HTMLElement {
    * Toggle button hidden or shown.
    * @param id button's id
    * @param force force hidden or shown
+   *
+   * [Document](https://ui-prototype.jonnys.top/zh/ui/#togglebuttonhidden_1)
    */
   toggleButtonHidden(id: string, force?: boolean) {
     this.#setBtnStatus(id, 'hidden', force);
@@ -578,6 +612,7 @@ export class UIText extends HTMLElement {
    * Toggle button enabled or disabled.
    * @param id button's id
    * @param force force enabled or disabled
+   * [Document](https://ui-prototype.jonnys.top/zh/ui/#togglebuttondisabled_1)
    */
   toggleButtonDisabled(id: string, force?: boolean) {
     this.#setBtnStatus(id, 'disabled', force);
@@ -597,6 +632,8 @@ export class UIText extends HTMLElement {
    * @param text input box object
    * @param btnId button's id
    * @returns button object and event listener
+   *
+   * [Document](https://ui-prototype.jonnys.top/zh/ui/#generateclearbutton)
    */
   static generateClearButton(
     text: UIText,

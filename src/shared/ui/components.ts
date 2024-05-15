@@ -1,6 +1,7 @@
 type ComponentNameMap = 'lang' | 'scroll' | 'text';
 const ComponentNames: ComponentNameMap[] = ['lang', 'scroll', 'text'];
 
+/** [Document](https://ui-prototype.jonnys.top/zh/ui/#initcomponents) */
 export function initComponents(...componentNames: ComponentNameMap[]) {
   for (const name of componentNames) {
     try {
@@ -12,6 +13,7 @@ export function initComponents(...componentNames: ComponentNameMap[]) {
   }
 }
 
+/** [Document](https://ui-prototype.jonnys.top/zh/ui/#initallcomponents) */
 export function initAllComponents() {
   initComponents(...ComponentNames);
 }

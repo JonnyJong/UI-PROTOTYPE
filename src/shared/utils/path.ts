@@ -34,11 +34,14 @@ function parsePath(...paths: string[]): string {
  * Resolves and returns the absolute path relative to the application's distribution directory.
  * @param {...string} path - Relative path segments to be resolved.
  * @returns {string} - Absolute path based on the distribution directory.
+ *
+ * [Document](https://ui-prototype.jonnys.top/zh/utils/#distpath)
  */
 export function distPath(...path: string[]): string {
   return parsePath(__dirname, '../..', ...path);
 }
 
+/** [Document](https://ui-prototype.jonnys.top/zh/utils/#pathnormalize) */
 export function pathNormalize(...path: string[]): string {
   return path
     .join('/')

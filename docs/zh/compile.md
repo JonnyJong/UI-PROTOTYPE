@@ -1,11 +1,6 @@
----
-title: 编译
----
-
-# 概述
+# 编译
 UI-PROTOTYPE 提供了基本的编译功能，开箱即用。
 
-# 使用方法
 ## 编译全部文件
 ```sh
 npm run compile
@@ -37,4 +32,4 @@ npm run compile-pug
 ```
 
 ## 自动编译
-参考[使用 VSCode 开发](../vscode)章节。
+参考[使用 VSCode 开发](./vscode.md)章节。

@@ -11,48 +11,70 @@ export interface DOMTagNameMap extends HTMLElementTagNameMap {
 
 /**
  * Provides methods for manipulating elements class names
+ *
+ * [Document](https://ui-prototype.jonnys.top/zh/utils/#idomclass)
  */
 export interface IDomClass<T extends HTMLElement> {
   /**
    * Add class names to all elements
+   *
+   * [Document](https://ui-prototype.jonnys.top/zh/utils/#add)
    */
   add(...args: string[]): void;
   /**
    * Check that all elements contain class names
+   *
+   * [Document](https://ui-prototype.jonnys.top/zh/utils/#contains)
    */
   contains(name: string): boolean;
   /**
    * Remove multiple class names from all elements
+   *
+   * [Document](https://ui-prototype.jonnys.top/zh/utils/#remove_1)
    */
   remove(...args: string[]): void;
   /**
    * Replace class names from all elements
+   *
+   * [Document](https://ui-prototype.jonnys.top/zh/utils/#replace)
    */
   replace(name: string, newName: string): void;
   /**
    * Toggle class names for all elements
+   *
+   * [Document](https://ui-prototype.jonnys.top/zh/utils/#toggle)
    */
   toggle(name: string, force?: boolean): void;
   /**
    * Set class name text directly for all elements
+   *
+   * [Document](https://ui-prototype.jonnys.top/zh/utils/#setclasstext)
    */
   setClassText(text: string): void;
 }
 
 /**
  * Provides methods to manipulate elements attributes
+ *
+ * [Document](https://ui-prototype.jonnys.top/zh/utils/#idomattribute)
  */
 export interface IDomAttribute<T extends HTMLElement> {
   /**
    * Getting the attributes of the first element
+   *
+   * [Document](https://ui-prototype.jonnys.top/zh/utils/#get)
    */
   get(name: string): (string | null)[];
   /**
    * Setting attributes for all elements
+   *
+   * [Document](https://ui-prototype.jonnys.top/zh/utils/#set)
    */
   set(name: string, value: string): void;
   /**
    * Remove attributes from all elements
+   *
+   * [Document](https://ui-prototype.jonnys.top/zh/utils/#remove_2)
    */
   remove(name: string): void;
 }
