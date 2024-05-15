@@ -20,7 +20,7 @@ import { distPath, pathNormalize } from 'shared/utils/path';
 import { readConfig, writeConfig } from 'main/utils/fs';
 
 const IpcEventHandlers: { [scope: string]: WindowIpcEventHandler } = {
-  win: (window, event) => {
+  win: (window, event, ...args: any[]) => {
     switch (event) {
       case 'minimize':
         return window.minimize();
@@ -33,6 +33,13 @@ const IpcEventHandlers: { [scope: string]: WindowIpcEventHandler } = {
         return window.hide();
       case 'isMaximized':
         return window.webContents.send('win:resize', window.isMaximized());
+      case 'controls':
+        let controls = args[0] as IWindowControls;
+        if (!controls) return;
+        window.controls.close = controls.close;
+        window.controls.minimize = controls.minimize;
+        window.controls.resize = controls.resize;
+        return;
     }
   },
 };

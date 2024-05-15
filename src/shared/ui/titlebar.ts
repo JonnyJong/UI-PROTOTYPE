@@ -83,6 +83,13 @@ class Titlebar implements ITitlebar {
     this.#flexElement.style.padding = `0 ${left}px 0 ${right}px`;
     this.#titlebarElement.style['--window-control-width'] = winCtrlWidth + 'px';
   }
+  #updateWindowControls() {
+    ipcRenderer.send('win:controls', {
+      close: this.#windowControlClose,
+      resize: this.#windowControlResize,
+      minimize: this.#windowControlMinimize,
+    });
+  }
   async init() {
     // Initialize variables
     this.#titlebarElement = $('#titlebar');
@@ -224,24 +231,29 @@ class Titlebar implements ITitlebar {
   set windowControlClose(value: 'close' | 'hide' | 'none') {
     if (!['close', 'hide', 'none'].includes(value)) return;
     this.#windowControlClose = value;
+    this.#updateWindowControls();
   }
   get windowControlResize(): boolean {
     return this.#windowControlResize;
   }
   set windowControlResize(value: boolean) {
+    this.#windowControlResize = !!value;
     this.#windowControlResizeElement.class.toggle(
       'window-control-hidden',
       !value
     );
+    this.#updateWindowControls();
   }
   get windowControlMinimize(): boolean {
     return this.#windowControlMinimize;
   }
   set windowControlMinimize(value: boolean) {
+    this.#windowControlMinimize = !!value;
     this.#windowControlMinimizeElement.class.toggle(
       'window-control-hidden',
       !value
     );
+    this.#updateWindowControls();
   }
   toggleButtonHidden(id: string, hidden?: boolean): void {
     let button = this.#buttons.find((btn) => btn.id === id);
