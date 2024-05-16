@@ -20,6 +20,10 @@
       {
         "match": "\\.pug$",
         "cmd": "npm run compile-pug"
+      },
+      {
+        "match": "src\\.*",
+        "cmd": "npm run compile-assets"
       }
     ]
   },
