@@ -1,3 +1,7 @@
+> [!NOTE]
+> This project is being archived. Some of its features have been implemented in the new [`abm-kits`](https://github.com/JonnyJong/abm-kits) repository.  
+> 本项目即将归档。其中部分功能已在新的 [`abm-kits`](https://github.com/JonnyJong/abm-kits) 仓库中实现。
+
 **Project Status:** The project is currently in the development phase and certain features have not yet been completed.  
 **项目状态:** 该项目目前还处于开发阶段，某些功能尚未完成。
 
